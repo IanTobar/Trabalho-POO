@@ -18,6 +18,33 @@ public abstract class Corretor {//abre classe Corretor
         
     }//fecha construtor 01
     
+    //GETTERS E SETTERS
+
+    public String getaNome() {
+        return aNome;
+    }
+
+    public void setaNome(String aNome) {
+        this.aNome = aNome;
+    }
+
+    public int getaCreci() {
+        return aCreci;
+    }
+
+    public void setaCreci(int aCreci) {
+        this.aCreci = aCreci;
+    }
+    
+    //retorna a representação de String do objeto Corretor
+    @Override
+    public String toString(){//abre toString
+		
+    	return String.format("Nome: %s \nCreci: %d", getaNome(), getaCreci());
+		
+    }//fecha toString    
+    
+    //metodo abstrato, que será implementado nas classes concretas
     public abstract double calculaRenda();
     
 }//fecha classe Corretor

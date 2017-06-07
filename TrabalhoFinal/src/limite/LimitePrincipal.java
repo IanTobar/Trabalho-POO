@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBAR
+
 package limite;
 
 import controle.*;
@@ -12,59 +11,89 @@ import modelo.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
- *
- * @author Ruan
- */
 public class LimitePrincipal extends JFrame implements ActionListener {
     
-    ControlePrincipal ctrPrincipal;
+    ControlePrincipal ctrPrincipal;//objeto responsável pelo controle desta visao
     
     JPanel panel;//Painel principal
+    
+    JMenu smCadastrar;
 
-    JButton btImovel;//Botão que leva para o limiteImovel
+    JMenuItem miCadastImovel;
+    
+    //construtor, passa o controle para o construtor
+    public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
 
-    JLabel lbImobiliaria;//Label que irá ter o nome da imobiliaria e etc
-
-    public LimitePrincipal(ControlePrincipal ctrPrincipal) {
         this.ctrPrincipal = ctrPrincipal;//Armazena o controlador Principal numa variavel
 
+        // Constrói a barra de menus
+        JMenuBar mb = new JMenuBar();
+        
+        setJMenuBar(mb);//setMenu adiciona o menu o JFrame
+        
+        // Constrói um menu e o adiciona a barra
+        JMenu mImovel = new JMenu("Imóvel", true);        
+        //adiciona o menu m na barra JMenuBar
+        mb.add(mImovel);
+
+        // Constrói um menu e o adiciona a barra
+        JMenu mCorretor = new JMenu("Corretor", true);        
+        //adiciona o menu m na barra JMenuBar
+        mb.add(mCorretor);        
+
+        // Constrói um menu e o adiciona a barra
+        JMenu mVendas = new JMenu("Vendas", true);        
+        //adiciona o menu m na barra JMenuBar
+        mb.add(mVendas);                
+
+        // Constrói um menu e o adiciona a barra
+        JMenu mPagamento = new JMenu("Pagamentos", true);        
+        //adiciona o menu m na barra JMenuBar
+        mb.add(mPagamento);                        
+        mPagamento.addActionListener(this);
+        
+        
+        // Constrói um menu e o adiciona a barra
+        JMenu mRelatorios = new JMenu("Relatórios", true);        
+        //adiciona o menu m na barra JMenuBar
+        mb.add(mRelatorios);                        
+        
+        
+        // Cria um item de menu e o adiciona ao submenu
+        //possui todas as propriedades comuns de um botão
+        miCadastImovel = new JMenuItem("Cadastrar");
+        miCadastImovel.setMnemonic(KeyEvent.VK_M);//define tecla de atalho
+        mImovel.add(miCadastImovel);//adicionar o menu item no sub menu sm
+        miCadastImovel.addActionListener(this);//adicionar listener no mi
+        
         //Inicialiação dos conteudos
         panel = new JPanel();
-        btImovel = new JButton();
-        lbImobiliaria = new JLabel();
 
-        //Adicionando Listeners nos Botões
-        btImovel.addActionListener(this);
-        
         //Setagem da tela
         panel.setLayout(null);
         setSize(500, 500);
 
+
+        
+        
         //Especificações do label lbImobiliaria
-        lbImobiliaria.setBounds(0,0,150,25);
-        lbImobiliaria.setText("Imoveis:");
-        
-        //Especificações do botão brImovel
-        btImovel.setBounds(0, 25, 150, 25);//Posição
-        btImovel.setText("Gerenciar Imoveis");
-        
-        //Adição do conteudo no painel
-        panel.add(btImovel);
-        panel.add(lbImobiliaria);
+//        lbImobiliaria.setBounds(0,0,150,25);
         
         //Finalização para exibição na tela
         getContentPane().add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
+                
+    }//fecha  construtor 01
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        //Ação caso o botão btImovel seja clicado
-        if(e.getSource().equals(btImovel)){
-            System.out.println("BtImovel");
+    public void actionPerformed(ActionEvent ae) {
+        
+        if(ae.getSource().equals(miCadastImovel)){
             new ControleImovel();
         }
+        
     }
+
+
 }
