@@ -5,10 +5,18 @@
  */
 package controle;
 
+import controle.*;
+import limite.*;
+import modelo.*;
+
 /**
  *
  * @author Ruan
  */
 public class ControleImovel {
+    LimiteImovel lmtImovel;
     
+    public ControleImovel(){
+        new LimiteImovel(this);
+    }
 }
