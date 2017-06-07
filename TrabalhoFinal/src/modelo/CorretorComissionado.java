@@ -25,7 +25,4 @@ public class CorretorComissionado extends Corretor{//abre classe CorretorComissi
         
     }
     
-    
-    
-    
 }//fecha classe CorretorComissionado

@@ -18,6 +18,6 @@ public abstract class Corretor {//abre classe Corretor
         
     }//fecha construtor 01
     
-    public abstract double calculaSalario();
+    public abstract double calculaRenda();
     
 }//fecha classe Corretor
