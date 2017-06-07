@@ -4,21 +4,26 @@
 
 package modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class CorretorContratado extends Corretor{//abre classeCorretorContratado
+public class CorretorContratado extends Corretor  implements Serializable {//abre classeCorretorContratado
 
     private double aSalarioFixo;
-    private Date aDataAdmissao;
+    //private Date aDataAdmissao;
+    
+    //falta adicionar a venda!!!
     
     //construtor
     public CorretorContratado( String pNome, int pCreci, double pSalario, Date pDataAdmissao ){//abre construtor 01
+
         
         //chama construtor da classe abstrata Corretor.java
         super(pNome, pCreci);
+
+        setaSalarioFixo(pSalario);//valida salário
         
-        aSalarioFixo = pSalario;
-        aDataAdmissao = pDataAdmissao;
+        //this.aDataAdmissao = pDataAdmissao;
         
     }//fecha construtor 01
     
@@ -28,10 +33,12 @@ public class CorretorContratado extends Corretor{//abre classeCorretorContratado
         return aSalarioFixo;
     }
 
-    public void setaSalarioFixo(double aSalarioFixo) {
-        this.aSalarioFixo = aSalarioFixo;
-    }
+    public void setaSalarioFixo(double aSalarioFixo) {//abre setaSalarioFixo
 
+        this.aSalarioFixo = aSalarioFixo < 0.0 ? 0.0 : aSalarioFixo;
+        
+    }//fecha setaSalarioFixo
+/*
     public Date getaDataAdmissao() {
         return aDataAdmissao;
     }
@@ -39,14 +46,21 @@ public class CorretorContratado extends Corretor{//abre classeCorretorContratado
     public void setaDataAdmissao(Date aDataAdmissao) {
         this.aDataAdmissao = aDataAdmissao;
     }
-    
-    
-    
+  */  
+    //retorna o rendimento
     @Override
     public double calculaRenda() {
         
         return aSalarioFixo; // + 1% valor da venda de cada imóvel vendido
                 
     }
+    
+    //sobreescreve o metodo toString
+    @Override
+    public String toString(){
+        
+        return "";//retornar dados
+        
+    }   
     
 }

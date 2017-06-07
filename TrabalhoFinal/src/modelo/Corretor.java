@@ -13,11 +13,11 @@ public abstract class Corretor {//abre classe Corretor
     //construtor 
     public Corretor( String pNome, int pCreci ){//abre construtor 01
         
-        aNome = pNome;
-        aCreci = pCreci;
+        this.aNome = pNome;
+        this.aCreci = pCreci;
         
     }//fecha construtor 01
-    
+   
     //GETTERS E SETTERS
 
     public String getaNome() {

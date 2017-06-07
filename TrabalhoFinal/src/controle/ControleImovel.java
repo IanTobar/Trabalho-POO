@@ -1,22 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBAR
+
 package controle;
 
 import controle.*;
 import limite.*;
 import modelo.*;
 
-/**
- *
- * @author Ruan
- */
-public class ControleImovel {
+public class ControleImovel {//abre classe ControleImovel
+    
     LimiteImovel lmtImovel;
     
-    public ControleImovel(){
+    //construtor 01
+    public ControleImovel(){//abre construtor 01
+        
         new LimiteImovel(this);
-    }
-}
+        
+    }//fecha construtor 01
+    
+}//fecha classe ControleImovel

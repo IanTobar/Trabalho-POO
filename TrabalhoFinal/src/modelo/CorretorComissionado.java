@@ -4,24 +4,50 @@
 
 package modelo;
 
-public class CorretorComissionado extends Corretor{//abre classe CorretorComissionado
+import java.io.Serializable;
 
-    private float aComissao;
+public class CorretorComissionado extends Corretor  implements Serializable {//abre classe CorretorComissionado
+
+    private double aComissao;
+    
+    /////////////////falta adicionar as vendas
     
     //construtor
-    public CorretorComissionado( String pNome, int pCreci, float pComissao){//abre construtor 01
+    public CorretorComissionado( String pNome, int pCreci, double pComissao ){//abre construtor 01
         
         //chama construtor da classe Corretor.java
         super(pNome, pCreci);
         
-        aComissao = pComissao;
+        setaComissao(pComissao);//valida comissão
         
     }//fecha construtor 01
+
+    //GETTERS E SETTERS
+
+    public double getaComissao() {
+        return aComissao;
+    }
+
+    public void setaComissao(double aComissao) {//abre setaComissao
+        
+        this.aComissao = ( aComissao >= 1 && aComissao <= 3) ? aComissao : 0;
+        
+    }//fecha setaComissao
     
+    
+    //calcula a renda do corretor
     @Override
     public double calculaRenda() {
         
-        return aComissao;//de 1% a 3% da venda realizada
+        return aComissao;//de 1% a 3% da venda realizada (aComissao * venda)
+        
+    }
+    
+    //sobreescreve o metodo toString
+    @Override
+    public String toString(){
+        
+        return "";//retornar dados
         
     }
     

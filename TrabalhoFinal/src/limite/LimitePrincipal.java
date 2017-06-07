@@ -16,10 +16,14 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     ControlePrincipal ctrPrincipal;//objeto responsável pelo controle desta visao
     
     JPanel panel;//Painel principal
-    
+    //declaração dos Menus
     JMenu smCadastrar;
+    JMenu mCorretor;
+ //   JMenu smContratado;//submenu
 
+    //Declaração dos itens dos menus
     JMenuItem miCadastImovel;
+    JMenuItem miCadastCorretor;
     
     //construtor, passa o controle para o construtor
     public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
@@ -36,11 +40,22 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         //adiciona o menu m na barra JMenuBar
         mb.add(mImovel);
 
-        // Constrói um menu e o adiciona a barra
-        JMenu mCorretor = new JMenu("Corretor", true);        
-        //adiciona o menu m na barra JMenuBar
-        mb.add(mCorretor);        
-
+        //////////////////////
+        //INICIO MENU DO CORRETOR//
+        //////////////////////    
+        mCorretor = new JMenu("Corretor", true);// Constrói um menu e o adiciona a barra
+        mb.add(mCorretor);//adiciona o menu mCorretor na barra JMenuBar        
+        
+        //smContratado = new JMenu("Corretor Contratado");// Cria um submenu
+        //mCorretor.add(smContratado);//adicionar o submenu no menu mContratar
+        
+        miCadastCorretor = new JMenuItem("Cadastrar");// Cria um item de menu e o adiciona ao submenu
+        mCorretor.add(miCadastCorretor);//adicionar o menu item no mCorretor        
+        miCadastCorretor.addActionListener(this);//adiciona listener aqui        
+        //////////////////////
+        //FIM MENU DO CORRETOR//
+        //////////////////////
+        
         // Constrói um menu e o adiciona a barra
         JMenu mVendas = new JMenu("Vendas", true);        
         //adiciona o menu m na barra JMenuBar
@@ -55,16 +70,14 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         
         // Constrói um menu e o adiciona a barra
         JMenu mRelatorios = new JMenu("Relatórios", true);        
-        //adiciona o menu m na barra JMenuBar
+        //adiciona o menu mRelatorios na barra JMenuBar
         mb.add(mRelatorios);                        
-        
         
         // Cria um item de menu e o adiciona ao submenu
         //possui todas as propriedades comuns de um botão
         miCadastImovel = new JMenuItem("Cadastrar");
-        miCadastImovel.setMnemonic(KeyEvent.VK_M);//define tecla de atalho
         mImovel.add(miCadastImovel);//adicionar o menu item no sub menu sm
-        miCadastImovel.addActionListener(this);//adicionar listener no mi
+        miCadastImovel.addActionListener(this);//adicionar listener no miCadastImovel
         
         //Inicialiação dos conteudos
         panel = new JPanel();
@@ -72,12 +85,6 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         //Setagem da tela
         panel.setLayout(null);
         setSize(500, 500);
-
-
-        
-        
-        //Especificações do label lbImobiliaria
-//        lbImobiliaria.setBounds(0,0,150,25);
         
         //Finalização para exibição na tela
         getContentPane().add(panel);
@@ -89,8 +96,13 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         
-        if(ae.getSource().equals(miCadastImovel)){
-            new ControleImovel();
+        if(ae.getSource().equals(miCadastImovel)){//se selecionar o cadastrar do imovel
+            new ControleImovel();//chama constrolador do imovel
+        }
+        else if(ae.getSource().equals(miCadastCorretor)){//se selecionar o cadastrar do corretor
+            
+            new ControleCorretor();//chama controlador do corretor contratado
+            
         }
         
     }

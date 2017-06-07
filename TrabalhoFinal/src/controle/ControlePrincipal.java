@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBAR
+
 package controle;
 
 import limite.LimitePrincipal;
 
-/**
- *
- * @author Ruan
- */
-public class ControlePrincipal {
+public class ControlePrincipal {//abre classe ControlePrincipal
+
     ControleImovel ctrImovel;
     
     LimitePrincipal lmtPrincipal;
@@ -23,4 +19,5 @@ public class ControlePrincipal {
     public static void main(String[] args){
         new ControlePrincipal();
     }
-}
+    
+}//fecha classe ControlePrincipal

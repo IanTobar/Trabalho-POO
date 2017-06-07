@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//BRUNO GUILHERME LUNARDI - 2016003830
+//IAN MARCEL TOBAR
+//RUAN MICHEL ADABO
+
 package modelo;
 
-/**
- *
- * @author Ruan
- */
-public class Imovel {
+public class Imovel {//abre classe Imovel
+    
     int codigo;//Codigo do imovel
     String tipo;//Tipo do imovel
     String descricao;//Descrição do imovel
@@ -17,15 +13,30 @@ public class Imovel {
     double precoSolicitado;//Preço proposto pelo vendedor
     String data;//Data de cadastro
 
-    public Imovel(int codigo, String tipo, String descricao, String nomeVendedor, double precoSolicitado, String data) {
+    //construtor
+    public Imovel(int codigo, String tipo, String descricao, String nomeVendedor, 
+            double precoSolicitado, String data) {//abre construtor 01
+        
         this.codigo = codigo;
         this.tipo = tipo;
         this.descricao = descricao;
         this.nomeVendedor = nomeVendedor;
         this.precoSolicitado = precoSolicitado;
         this.data = data;
-    }
+        
+    }//fecha construtor 01
 
+    //GETTERS E SETTERS
+
+    //valida preço
+    public void setPrecoSolicitado(double precoSolicitado) {//abre setPrecoSolicitado
+        
+        this.precoSolicitado = precoSolicitado < 0.0 ? 0.0 : precoSolicitado;
+        
+    }//fecha setPrecoSolicitado
+    
+    
+    
     public int getCodigo() {
         return codigo;
     }
@@ -50,4 +61,4 @@ public class Imovel {
         return data;
     }
     
-}
+}//fecha classe Imovel
