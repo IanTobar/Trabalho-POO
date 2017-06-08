@@ -1,0 +1,103 @@
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBAR
+
+package controle;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Vector;
+import limite.LimiteCorretor;
+import modelo.Corretor;
+import modelo.CorretorComissionado;
+import modelo.CorretorContratado;
+
+public class ControleCorretor {//abre classe ControleCorretor
+    
+    LimiteCorretor lmtCorretor;
+    
+    private Vector listaCorretor = new Vector();//array para corretores
+    //constante
+//    private final String arquivo = "disc.dat";    
+    
+    //construtor
+    public ControleCorretor(){//abre ControleCorretor
+        
+        new LimiteCorretor(this);
+        
+    }//fecha ControleCorretor
+    
+    
+    //metodo para inserir corretor contratado
+    public void insereContratado( String pNome, int pCreci, double pSalario, Date pDate ){//abre metodo insereContratado
+        
+        CorretorContratado contratado = new CorretorContratado( pNome, pCreci,  pSalario, pDate );//cria objeto contratado
+        
+        listaCorretor.addElement(contratado);//adiciona o contratado no array list de vendedor
+        
+    }//fecha metodo inseteContratado    
+
+    //metodo para inserir vendedor contratado
+    public void insereComissionado(  String pNome, int pCreci, double pComissao ){//abre metodo insereContratado
+        
+        CorretorComissionado comissionado = new CorretorComissionado( pNome, pCreci, pComissao );//cria objeto contratado
+        
+        listaCorretor.addElement(comissionado);//adiciona o contratado no array list de vendedor
+        
+    }//fecha metodo inseteContratado        
+    
+  /*  
+    //metodo para serializa o corretor contratado, para salvar em arquivo
+    private void serializaCorretorContratado() throws Exception {//abre serializaDisciplina
+        
+        //Stream de gravação
+        FileOutputStream objFileOS = new FileOutputStream("corretorContratados.dat");
+        //Stream de gravação
+        ObjectOutputStream objOS = new ObjectOutputStream(objFileOS);
+        //grava o vetor no arquivo
+        objOS.writeObject(listaCorretor);
+        //limpa objOS
+        objOS.flush();
+        //fecha stream
+        objOS.close();
+        
+    }//fecha serializaDisciplina    
+
+    
+    //metodo para desserializar o arquivo de Disciplinas
+    private void desserializaCorretorContratado() throws Exception {//abre desserializaDisciplina
+        
+        //nome do arquivo que será lido
+        File objFile = new File("corretorContratados.dat");
+        
+        //se o arquivo existir
+        if (objFile.exists()) {//abre if 01
+            
+            //objeto de stream de bytes
+            FileInputStream objFileIS = new FileInputStream("corretorContratados.dat");
+            //objeto de stream de bytes
+            ObjectInputStream objIS = new ObjectInputStream(objFileIS);
+            //converte o objeto lido do arquivo para o tipo Vector e atribui ao Vector vecADisciplinas
+            listaCorretor = (Vector) objIS.readObject();
+            //fecha stream
+            objIS.close();
+            
+        }//fecha if 01
+        
+    }//fecha desserializaDisciplina
+
+    
+    
+    //metodo que faz a chamada da serializacao do vetor para arquivo
+    public void finalize() throws Exception {//abre finalize
+        
+        serializaCorretorContratado();
+        
+    }//fecha finalize    
+    */
+}//fecha classe ControleCorretor
