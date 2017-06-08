@@ -4,6 +4,7 @@
 package limite;
 
 import controle.ControleCorretor;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -19,13 +20,13 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     private JTextField tfNomeCorretor;
     private JTextField tfCreci;
     private JTextField tfSalario;
-    private JTextField tfDataAdmissao;
+    private JTextField tfComissao;
 
     //declaração dos JLabel
     private JLabel lbNomeCorretor;
     private JLabel lbCreci;
     private JLabel lbSalario;
-    private JLabel lbDataAdmissao;
+    private JLabel lbComissao;
 
     private JButton btCadastrar;//declaração do botao de cadastrar
     private JComboBox cbTipoCorretor;//declaracao do combobox que terá os tipos de corretores
@@ -42,13 +43,13 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         tfNomeCorretor = new JTextField(20);
         tfCreci = new JTextField(20);
         tfSalario = new JTextField(20);
-        tfDataAdmissao = new JTextField(10);
+        tfComissao = new JTextField(10);
         cbTipoCorretor = new JComboBox();
         btCadastrar = new JButton("Cadastrar");
         lbCreci = new JLabel("Digite o Creci");
         lbNomeCorretor = new JLabel("Digite o nome do corretor");
         lbSalario = new JLabel("Digite o salario do corretor (caso este for contratado)");
-        lbDataAdmissao = new JLabel("Data de admissão");
+        lbComissao = new JLabel("Comissão");
 
         //adicionar itens no comboBox
         cbTipoCorretor.addItem("Comissionado");
@@ -67,14 +68,16 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         p.add(lbCreci);
         p.add(tfCreci);
         p.add(cbTipoCorretor);
+        p.add(lbComissao);
+        p.add(tfComissao);
         p.add(btCadastrar);
-        p.add(lbDataAdmissao);
-        p.add(tfDataAdmissao);
+        
+        p.setLayout(new GridLayout(10, 2));//grade 4 x 4
 
         //como esta classe é uma janela:
         this.add(p);//adiciona o painel nesta janela
         this.pack();//empacota tudo que está no painel JPane
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//fecha o programa
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//fecha o programa
         this.setSize(500, 500);//define tamanho da janela
         this.setVisible(true);//torna a janela visivel      
 
@@ -88,7 +91,7 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         double pSalario = Double.parseDouble(tfSalario.getText());
         Date pData = new Date();
         String pTipo = (String) cbTipoCorretor.getSelectedItem();
-        double pComissao = Double.parseDouble(tfSalario.getText());
+        double pComissao = Double.parseDouble(tfComissao.getText());
 
         if ((ae.getSource() == btCadastrar) && (pTipo == "Contratado")) {//abre if 01
             

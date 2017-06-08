@@ -57,10 +57,11 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
     
     //sobreescreve o metodo toString
     @Override
-    public String toString(){
+    public String toString(){//abre toString
         
-        return "";//retornar dados
+        return "Nome: " + super.getaNome() + " CRECI: " + super.getaCreci() + 
+                " Renda: " + this.calculaRenda();//retornar dados
         
-    }   
+    }//fecha toString 
     
 }

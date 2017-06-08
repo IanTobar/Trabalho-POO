@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import limite.LimiteCorretor;
+import limite.LimiteListaCorretor;
 import modelo.Corretor;
 import modelo.CorretorComissionado;
 import modelo.CorretorContratado;
@@ -20,15 +21,17 @@ import modelo.CorretorContratado;
 public class ControleCorretor {//abre classe ControleCorretor
     
     LimiteCorretor lmtCorretor;
+    LimiteListaCorretor lmtListaCorretor;
     
-    private Vector listaCorretor = new Vector();//array para corretores
+    private ArrayList <Corretor> listaCorretor = new ArrayList <Corretor>();//array para vendedor
+    
     //constante
 //    private final String arquivo = "disc.dat";    
     
     //construtor
     public ControleCorretor(){//abre ControleCorretor
         
-        new LimiteCorretor(this);
+        //new LimiteCorretor(this);
         
     }//fecha ControleCorretor
     
@@ -36,22 +39,47 @@ public class ControleCorretor {//abre classe ControleCorretor
     //metodo para inserir corretor contratado
     public void insereContratado( String pNome, int pCreci, double pSalario, Date pDate ){//abre metodo insereContratado
         
+        //chama o modelo CorretorContratado e aciona o seu construtor
         CorretorContratado contratado = new CorretorContratado( pNome, pCreci,  pSalario, pDate );//cria objeto contratado
-        
-        listaCorretor.addElement(contratado);//adiciona o contratado no array list de vendedor
+        listaCorretor.add(contratado);//adiciona o contratado no array list de corretor
         
     }//fecha metodo inseteContratado    
 
     //metodo para inserir vendedor contratado
     public void insereComissionado(  String pNome, int pCreci, double pComissao ){//abre metodo insereContratado
         
+        //chama modelo CorretorComissionado e aciona o seu construtor
         CorretorComissionado comissionado = new CorretorComissionado( pNome, pCreci, pComissao );//cria objeto contratado
-        
-        listaCorretor.addElement(comissionado);//adiciona o contratado no array list de vendedor
+        listaCorretor.add(comissionado);//adiciona o contratado no array list de corretor
         
     }//fecha metodo inseteContratado        
+
+    //metodo para listar os corretoes
+    public String listaCorretor(){///abre listaCorretor
+        
+        String str = "";
+        
+        for(int i = 0; i < listaCorretor.size(); i++){
+            
+            str += listaCorretor.get(i).getaNome();//pega o nome do corretor
+            
+            if(listaCorretor.get(i) instanceof CorretorComissionado){//abre if 01
+                
+                CorretorComissionado auxComissionado = (CorretorComissionado)listaCorretor.get(i);
+                
+            }//fecha if 01
+            
+        }
+        
+        lmtListaCorretor = new LimiteListaCorretor(listaCorretor);
+        
+        return str;
+        
+    }//fecha listaCorretor
     
-  /*  
+ 
+
+    /*
     //metodo para serializa o corretor contratado, para salvar em arquivo
     private void serializaCorretorContratado() throws Exception {//abre serializaDisciplina
         
@@ -83,7 +111,7 @@ public class ControleCorretor {//abre classe ControleCorretor
             //objeto de stream de bytes
             ObjectInputStream objIS = new ObjectInputStream(objFileIS);
             //converte o objeto lido do arquivo para o tipo Vector e atribui ao Vector vecADisciplinas
-            listaCorretor = (Vector) objIS.readObject();
+            listaCorretor = (ArrayList) objIS.readObject();
             //fecha stream
             objIS.close();
             
@@ -99,5 +127,6 @@ public class ControleCorretor {//abre classe ControleCorretor
         serializaCorretorContratado();
         
     }//fecha finalize    
-    */
+ */
+    
 }//fecha classe ControleCorretor

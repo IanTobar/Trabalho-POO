@@ -40,7 +40,7 @@ public abstract class Corretor {//abre classe Corretor
     @Override
     public String toString(){//abre toString
 		
-    	return String.format("Nome: %s \nCreci: %d", getaNome(), getaCreci());
+    	return String.format("Nome: %s \nCreci: %d", getaNome(), getaCreci());//retorna dado
 		
     }//fecha toString    
     

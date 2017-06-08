@@ -15,6 +15,10 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     
     ControlePrincipal ctrPrincipal;//objeto responsável pelo controle desta visao
     
+    ControleCorretor ctrCorretor = new ControleCorretor();
+    
+    LimiteCorretor lmtCorretor;
+    
     JPanel panel;//Painel principal
     //declaração dos Menus
     JMenu smCadastrar;
@@ -24,6 +28,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     //Declaração dos itens dos menus
     JMenuItem miCadastImovel;
     JMenuItem miCadastCorretor;
+    JMenuItem miListCorretor;
     
     //construtor, passa o controle para o construtor
     public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
@@ -52,6 +57,10 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         miCadastCorretor = new JMenuItem("Cadastrar");// Cria um item de menu e o adiciona ao submenu
         mCorretor.add(miCadastCorretor);//adicionar o menu item no mCorretor        
         miCadastCorretor.addActionListener(this);//adiciona listener aqui        
+
+        miListCorretor = new JMenuItem("Listar");// Cria um item de menu e o adiciona ao submenu
+        mCorretor.add(miListCorretor);//adicionar o menu item no mCorretor        
+        miListCorretor.addActionListener(this);//adiciona listener aqui                
         //////////////////////
         //FIM MENU DO CORRETOR//
         //////////////////////
@@ -99,9 +108,19 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         if(ae.getSource().equals(miCadastImovel)){//se selecionar o cadastrar do imovel
             new ControleImovel();//chama constrolador do imovel
         }
-        else if(ae.getSource().equals(miCadastCorretor)){//se selecionar o cadastrar do corretor
+        
+        if(ae.getSource().equals(miCadastCorretor)){//se selecionar o cadastrar do corretor
             
-            new ControleCorretor();//chama controlador do corretor contratado
+            //new ControleCorretor();//chama controlador do corretor contratado
+            
+            lmtCorretor = new LimiteCorretor(ctrCorretor);
+            
+            
+        }
+        
+        if(ae.getSource().equals(miListCorretor)){
+            
+          ctrCorretor.listaCorretor();
             
         }
         
