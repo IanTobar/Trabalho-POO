@@ -97,39 +97,27 @@ public class LimiteImovel extends JFrame implements ActionListener {
         JTextField tfData = new JTextField();
 
         //Inicializa Labels
-        JLabel lbLogo = new JLabel();
-        JLabel lbCodigo = new JLabel();
-        JLabel lbTipo = new JLabel();
-        JLabel lbDescricao = new JLabel();
-        JLabel lbProprietario = new JLabel();
-        JLabel lbPreco = new JLabel();
-        JLabel lbData = new JLabel();
+        JLabel lbLogo = new JLabel("DADOS DO IMOVEL");
+        JLabel lbCodigo = new JLabel("Código:");
+        JLabel lbTipo = new JLabel("Tipo:");
+        JLabel lbDescricao = new JLabel("Descrição:");
+        JLabel lbProprietario = new JLabel("Proprietário do Imóvel:");
+        JLabel lbPreco = new JLabel("Preço:");
+        JLabel lbData = new JLabel("Data:");
 
         //Inicializa Botões
-        JButton btSubmit = new JButton();
-        JButton btCancelar = new JButton();
+        JButton btSubmit = new JButton("Cadastrar");
+        JButton btCancelar = new JButton("Cancelar");
 
-        
         pCadastro.setLayout(null);
 
-        lbLogo.setText("DADOS DO IMOVEL");
-
-        lbCodigo.setText("Codigo:");
-        lbTipo.setText("Tipo:");
-        lbDescricao.setText("Descrição:");
-        lbProprietario.setText("Nome do proprietário:");
-        lbPreco.setText("Preço proposto:");
-        lbData.setText("Data do Cadastro:");
-
-        btSubmit.setText("Cadastrar");
+        //Listener dos botões
         btSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Funciona!");
             }
         });
-        
-        btCancelar.setText("Cancelar");
         btCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,6 +125,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
             }
         });
 
+        //-Posições dos elementos-//
         lbLogo.setBounds(200, 0, 125, 25);
 
         lbCodigo.setBounds(0, 50, 500, 25);
@@ -156,6 +145,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         btSubmit.setBounds(200, 375, 100, 25);
         btCancelar.setBounds(200, 425, 100, 25);
         
+        //-Adição dos elementos no painel-//
         pCadastro.add(tfCodigo);
         pCadastro.add(tfTipo);
         pCadastro.add(tfDescricao);
@@ -174,6 +164,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         pCadastro.add(btSubmit);
         pCadastro.add(btCancelar);
         
+        //Ajustes no frame
         frCadastra.setSize(500, 500);
         frCadastra.getContentPane().add(pCadastro);
         frCadastra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
