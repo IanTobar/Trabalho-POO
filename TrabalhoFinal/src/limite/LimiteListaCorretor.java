@@ -17,7 +17,7 @@ public class LimiteListaCorretor extends JFrame {//abre classe LimiteListaCorret
     //cria um grupo para o radio button
     ButtonGroup grp = new ButtonGroup();
 
-    //construtor
+    //construtor recebe o ArrayList de Corretor, vindo do ControleCorretor
     public LimiteListaCorretor(ArrayList<Corretor> listaCorretor) {//abre LimiteListaCorretor
 
         //chama construtor da classe JFrame
@@ -52,7 +52,7 @@ public class LimiteListaCorretor extends JFrame {//abre classe LimiteListaCorret
                             }
                         });
 
-            }
+            }//fecha if 01
             else {//abre else do if 01
                 //cria um objeto auxiliar para pegar os dados do CorretorComissionado
                 CorretorComissionado auxComissionado = (CorretorComissionado) listaCorretor.get(i);
@@ -75,7 +75,7 @@ public class LimiteListaCorretor extends JFrame {//abre classe LimiteListaCorret
                             }
                         });
 
-            }
+            }//fecha else do if 01
 
         }//fecha for 01
 
