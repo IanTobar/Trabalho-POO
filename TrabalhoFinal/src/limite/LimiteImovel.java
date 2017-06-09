@@ -9,6 +9,7 @@ import controle.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -31,43 +32,6 @@ public class LimiteImovel extends JFrame implements ActionListener {
 
     public LimiteImovel(ControleImovel ctrImovel) {
         this.ctrImovel = ctrImovel;//Armazena o controlador Principal numa variavel
-
-        //Inicialiação dos conteudos
-        panel = new JPanel();
-        btCadastrar = new JButton();
-        btConsultar = new JButton();
-        lbOpcoes = new JLabel();
-
-        //Setagem da tela
-        panel.setLayout(null);
-        setSize(500, 500);
-
-        //Especificações do label lbOpções
-        lbOpcoes.setBounds(0, 0, 150, 25);
-        lbOpcoes.setText("Opções:");
-
-        //Especificações dos Botões
-        //Especificações do botão brImovel
-        btCadastrar.setBounds(0, 25, 150, 25);//Posição
-        btCadastrar.setText("Cadastrar");
-
-        //Especificações do botão brImovel
-        btConsultar.setBounds(0, 50, 150, 25);//Posição
-        btConsultar.setText("Consultar");
-
-        //Listeners dos botões
-        btCadastrar.addActionListener(this);
-        btConsultar.addActionListener(this);
-
-        //Adição do conteudo no painel
-        panel.add(btCadastrar);
-        panel.add(btConsultar);
-        panel.add(lbOpcoes);
-
-        //Finalização para exibição na tela
-        getContentPane().add(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
     }
 
     @Override
@@ -178,5 +142,86 @@ public class LimiteImovel extends JFrame implements ActionListener {
         frCadastra.getContentPane().add(pCadastro);
         frCadastra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frCadastra.setVisible(true);
+    }
+
+    public void listaImoveis() {
+        System.out.println("Teste1");
+        JFrame frConsultar = new JFrame();
+        JPanel pMain = new JPanel();//Painel principal
+        JPanel pLabel = new JPanel();//Painel para Armazenar o label inicial
+        JPanel pButtons = new JPanel();//Painel pra guardar os botões de Editar, Excluir e Cadastrar um novo Imovel
+        JPanel pLista = new JPanel();//Painel que conterá as listas de imoveis
+        System.out.println("Aqui1");
+        //pMain especificações
+        pMain.setLayout(null);
+
+        //pLabel especificações
+        pLabel.setLayout(new BorderLayout());
+        pLabel.add(new JLabel("LISTA DE IMOVEIS"), BorderLayout.CENTER);
+
+        //pButtons especificações
+        pButtons.setLayout(new GridLayout(1, 3, 5, 0));
+        //Adição dos botões
+        JButton bCadastrar = new JButton("Cadastrar Novo Imóvel");
+        JButton bEditar = new JButton("Editar Imóvel");
+        JButton bExcluir = new JButton("Excluir Imóvel");
+
+        bCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frConsultar.dispose();
+                cadastraImovel();
+            }
+        });
+        bEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Essa porra vai editar um dia");
+            }
+        });
+        bExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Essa porra vai excluir um dia");
+            }
+        });
+
+        pButtons.add(bCadastrar);
+        pButtons.add(bEditar);
+        pButtons.add(bExcluir);
+
+        //pLista especificações
+        pLista.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 10;
+        c.weighty = 6;
+
+        int linha = 0;
+        ArrayList<String> lista = ctrImovel.listarImoveis();
+        if (lista.size() != 0) {
+            for (String s : lista) {
+                c.gridy = linha;
+                c.gridx = 0;
+                pLista.add(new JRadioButton(), c);
+                c.gridx = 1;
+                pLista.add(new JTextArea(s), c);
+                linha++;
+            }
+        }
+        
+        frConsultar.setSize(500, 600);
+        pLabel.setBounds(0, 0, 500, 50);
+        pButtons.setBounds(0, 50, 500, 50);
+        pLista.setBounds(0, 100, 500, 500);
+
+        pMain.add(pLabel);
+        pMain.add(pButtons);
+        pMain.add(pLista);
+
+        frConsultar.getContentPane().add(pMain);
+        frConsultar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frConsultar.setVisible(true);
     }
 }

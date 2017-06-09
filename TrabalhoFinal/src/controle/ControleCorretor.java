@@ -1,7 +1,6 @@
 //BRUNO GUILHERME LUNARDI
 //RUAN MICHEL ADABO
 //IAN MARCELO TOBAR
-
 package controle;
 
 import java.io.File;
@@ -19,65 +18,60 @@ import modelo.CorretorComissionado;
 import modelo.CorretorContratado;
 
 public class ControleCorretor {//abre classe ControleCorretor
-    
+
     LimiteCorretor lmtCorretor;
     LimiteListaCorretor lmtListaCorretor;
-    
-    private ArrayList <Corretor> listaCorretor = new ArrayList <Corretor>();//array para vendedor
-    
+
+    private ArrayList<Corretor> listaCorretor = new ArrayList<Corretor>();//array para vendedor
+
     //constante
-//    private final String arquivo = "disc.dat";    
-    
+    //private final String arquivo = "disc.dat";    
     //construtor
-    public ControleCorretor(){//abre ControleCorretor
-        
+    public ControleCorretor() {//abre ControleCorretor
+
         //new LimiteCorretor(this);
-        
     }//fecha ControleCorretor
-    
-    
+
     //metodo para inserir corretor contratado
-    public void insereContratado( String pNome, int pCreci, double pSalario, Date pDate ){//abre metodo insereContratado
-        
+    public void insereContratado(String pNome, int pCreci, double pSalario, Date pDate) {//abre metodo insereContratado
+
         //chama o modelo CorretorContratado e aciona o seu construtor
-        CorretorContratado contratado = new CorretorContratado( pNome, pCreci,  pSalario, pDate );//cria objeto contratado
+        CorretorContratado contratado = new CorretorContratado(pNome, pCreci, pSalario, pDate);//cria objeto contratado
         listaCorretor.add(contratado);//adiciona o contratado no array list de corretor
-        
+
     }//fecha metodo inseteContratado    
 
     //metodo para inserir vendedor contratado
-    public void insereComissionado(  String pNome, int pCreci, double pComissao ){//abre metodo insereContratado
-        
+    public void insereComissionado(String pNome, int pCreci, double pComissao) {//abre metodo insereContratado
+
         //chama modelo CorretorComissionado e aciona o seu construtor
-        CorretorComissionado comissionado = new CorretorComissionado( pNome, pCreci, pComissao );//cria objeto contratado
+        CorretorComissionado comissionado = new CorretorComissionado(pNome, pCreci, pComissao);//cria objeto contratado
         listaCorretor.add(comissionado);//adiciona o contratado no array list de corretor
-        
+
     }//fecha metodo inseteContratado        
 
     //metodo para listar os corretoes
-    public String listaCorretor(){///abre listaCorretor
-        
+    public String listaCorretor() {///abre listaCorretor
+
         String str = "";
-        
-        for(int i = 0; i < listaCorretor.size(); i++){
-            
+
+        for (int i = 0; i < listaCorretor.size(); i++) {
+
             str += listaCorretor.get(i).getaNome();//pega o nome do corretor
-            
-            if(listaCorretor.get(i) instanceof CorretorComissionado){//abre if 01
-                
-                CorretorComissionado auxComissionado = (CorretorComissionado)listaCorretor.get(i);
-                
+
+            if (listaCorretor.get(i) instanceof CorretorComissionado) {//abre if 01
+
+                CorretorComissionado auxComissionado = (CorretorComissionado) listaCorretor.get(i);
+
             }//fecha if 01
-            
+
         }
-        
+
         lmtListaCorretor = new LimiteListaCorretor(listaCorretor);
-        
+
         return str;
-        
+
     }//fecha listaCorretor
-    
- 
 
     /*
     //metodo para serializa o corretor contratado, para salvar em arquivo
@@ -127,6 +121,5 @@ public class ControleCorretor {//abre classe ControleCorretor
         serializaCorretorContratado();
         
     }//fecha finalize    
- */
-    
+     */
 }//fecha classe ControleCorretor

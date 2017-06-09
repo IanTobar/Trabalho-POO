@@ -8,7 +8,7 @@ import limite.LimitePrincipal;
 
 public class ControlePrincipal {//abre classe ControlePrincipal
 
-    ControleImovel ctrImovel;
+    ControleImovel ctrImovel = new ControleImovel("Vazio");
     
     LimitePrincipal lmtPrincipal;
     
