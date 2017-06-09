@@ -89,12 +89,12 @@ public class LimiteImovel extends JFrame implements ActionListener {
         JPanel pCadastro = new JPanel();
 
         //Inicializa TextFields 
-        JTextField tfCodigo = new JTextField();
-        JTextField tfTipo = new JTextField();
-        JTextField tfDescricao = new JTextField();
-        JTextField tfProprietario = new JTextField();
-        JTextField tfPreco = new JTextField();
-        JTextField tfData = new JTextField();
+        JTextField tfCodigo = new JTextField("");
+        JTextField tfTipo = new JTextField("");
+        JTextField tfDescricao = new JTextField("");
+        JTextField tfProprietario = new JTextField("");
+        JTextField tfPreco = new JTextField("");
+        JTextField tfData = new JTextField("");
 
         //Inicializa Labels
         JLabel lbLogo = new JLabel("DADOS DO IMOVEL");
@@ -115,7 +115,16 @@ public class LimiteImovel extends JFrame implements ActionListener {
         btSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Funciona!");
+                if (tfCodigo.getText().equals("") || tfTipo.getText().equals("")
+                        || tfDescricao.getText().equals("") || tfProprietario.getText().equals("")
+                        || tfPreco.getText().equals("") || tfData.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos antes da conclusão do cadastro", "Error!", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    ctrImovel.cadastraImovel(Integer.parseInt(tfCodigo.getText()),
+                            tfTipo.getText(), tfDescricao.getText(), tfProprietario.getText(),
+                            Double.valueOf(tfPreco.getText()), tfData.getText());
+                    frCadastra.dispose();
+                }
             }
         });
         btCancelar.addActionListener(new ActionListener() {
@@ -144,7 +153,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
 
         btSubmit.setBounds(200, 375, 100, 25);
         btCancelar.setBounds(200, 425, 100, 25);
-        
+
         //-Adição dos elementos no painel-//
         pCadastro.add(tfCodigo);
         pCadastro.add(tfTipo);
@@ -163,7 +172,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
 
         pCadastro.add(btSubmit);
         pCadastro.add(btCancelar);
-        
+
         //Ajustes no frame
         frCadastra.setSize(500, 500);
         frCadastra.getContentPane().add(pCadastro);
