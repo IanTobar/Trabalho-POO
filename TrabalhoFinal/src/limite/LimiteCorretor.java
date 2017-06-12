@@ -27,7 +27,8 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     private JLabel lbCreci;
     private JLabel lbSalario;
     private JLabel lbComissao;
-
+    
+    //declaração dos botões
     private JButton btCadastrar;//declaração do botao de cadastrar
     private JComboBox cbTipoCorretor;//declaracao do combobox que terá os tipos de corretores
 

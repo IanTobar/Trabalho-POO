@@ -8,9 +8,9 @@ import limite.LimitePrincipal;
 
 public class ControlePrincipal {//abre classe ControlePrincipal
 
-    ControleImovel ctrImovel;
+    ControleImovel ctrImovel;//cria um controle responasavel pelos imóveis
     
-    LimitePrincipal lmtPrincipal;
+    LimitePrincipal lmtPrincipal;//variavel de instância responsavel pelo limite principal
     
     public ControlePrincipal(){
         lmtPrincipal = new LimitePrincipal(this);

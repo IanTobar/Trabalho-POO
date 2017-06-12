@@ -10,12 +10,12 @@ import modelo.*;
 
 public class ControleImovel {//abre classe ControleImovel
     
-    LimiteImovel lmtImovel;
+    LimiteImovel lmtImovel;//variavel de instancia de LimiteImovel
     
     //construtor 01
     public ControleImovel(){//abre construtor 01
         
-        new LimiteImovel(this);
+        new LimiteImovel(this);//cria novo LimiteImovel
         
     }//fecha construtor 01
     

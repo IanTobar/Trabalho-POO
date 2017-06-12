@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package limite;
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBARmite;
 
 import controle.*;
 
@@ -11,13 +8,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
- *
- * @author Ruan
- */
-public class LimiteImovel extends JFrame implements ActionListener {
+public class LimiteImovel extends JFrame implements ActionListener {//abre classe LimiteImovel
 
-    ControleImovel ctrImovel;
+    ControleImovel ctrImovel;//variavel de instancia referente ao ControleImovel
 
     //Panel
     JPanel panel;
@@ -29,7 +22,8 @@ public class LimiteImovel extends JFrame implements ActionListener {
     //labels
     JLabel lbOpcoes;
 
-    public LimiteImovel(ControleImovel ctrImovel) {
+    //construtor
+    public LimiteImovel(ControleImovel ctrImovel) {//abre construtor 01
         this.ctrImovel = ctrImovel;//Armazena o controlador Principal numa variavel
 
         //Inicialiação dos conteudos
@@ -68,20 +62,23 @@ public class LimiteImovel extends JFrame implements ActionListener {
         getContentPane().add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
+        
+    }//fecha construtor 01
+    //metodo para eventos dos botões
     @Override
     public void actionPerformed(ActionEvent e) {
+        //verifica se o botão precionado foi o cadastrar
         if (e.getSource().equals(btCadastrar)) {
-            cadastraImovel();
+            cadastraImovel();//chama metodo cadastraImovel
         }
+        //verifica se o botão selecionado foi o consultar
         if (e.getSource().equals(btConsultar)) {
 
         }
 
     }
-
-    void cadastraImovel() {
+    //metodo para cadastrarImovel
+    void cadastraImovel() {//abre cadastraImovel
         //Inicializa Tela
         JFrame frCadastra = new JFrame();
 
@@ -169,5 +166,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         frCadastra.getContentPane().add(pCadastro);
         frCadastra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frCadastra.setVisible(true);
-    }
-}
+        
+    }//fecha cadastraImovel
+    
+}//fecha classe LimiteImovel
