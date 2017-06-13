@@ -87,7 +87,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
                     ctrImovel.cadastraImovel(Integer.parseInt(tfCodigo.getText()),
                             tfTipo.getText(), tfDescricao.getText(), tfProprietario.getText(),
                             Double.valueOf(tfPreco.getText()), tfData.getText());
-                    frCadastra.dispose();
+                    //frCadastra.dispose();
                 }
             }
         });
@@ -140,7 +140,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         //Ajustes no frame
         frCadastra.setSize(500, 500);
         frCadastra.getContentPane().add(pCadastro);
-        frCadastra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frCadastra.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frCadastra.setVisible(true);
     }
 
@@ -150,7 +150,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         JPanel pMain = new JPanel();//Painel principal
         JPanel pLabel = new JPanel();//Painel para Armazenar o label inicial
         JPanel pButtons = new JPanel();//Painel pra guardar os botões de Editar, Excluir e Cadastrar um novo Imovel
-        JPanel pLista = new JPanel();//Painel que conterá as listas de imoveis
+
         System.out.println("Aqui1");
         //pMain especificações
         pMain.setLayout(null);
@@ -190,28 +190,46 @@ public class LimiteImovel extends JFrame implements ActionListener {
         pButtons.add(bEditar);
         pButtons.add(bExcluir);
 
-        //pLista especificações
-        pLista.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 10;
-        c.weighty = 6;
-
-        int linha = 0;
         ArrayList<String> lista = ctrImovel.listarImoveis();
+
+        JPanel pLista = new JPanel();
+        pLista.setLayout(new GridLayout(lista.size(), 1, 0, 5));
+
+        ButtonGroup grp = new ButtonGroup();
+
+        int i = 1;
         if (lista.size() != 0) {
             for (String s : lista) {
-                c.gridy = linha;
+                JPanel pUnidade = new JPanel();//Painel que conterá as listas de imoveis
+                pUnidade.setLayout(new GridBagLayout());
+                GridBagConstraints c = new GridBagConstraints();
+
+                c.fill = GridBagConstraints.BOTH;
+                c.weightx = 6;
+                c.weighty = 1;
+
+                c.gridy = 0;
                 c.gridx = 0;
-                pLista.add(new JRadioButton(), c);
+                c.gridheight = 2;
+                JRadioButton rb = new JRadioButton(String.valueOf(i));
+                rb.addItemListener(new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        JToggleButton button = (JToggleButton) e.getSource();
+                        if (e.getStateChange() == ItemEvent.SELECTED) {
+                            System.out.println(button.getText() + "selected.");
+                        }
+                    }
+                });
+                grp.add(rb);
+                pUnidade.add(rb, c);
                 c.gridx = 1;
-                pLista.add(new JTextArea(s), c);
-                linha++;
+                pUnidade.add(new JTextArea(s), c);
+                pLista.add(pUnidade);
+                i++;
             }
         }
-        
-        frConsultar.setSize(500, 600);
+
         pLabel.setBounds(0, 0, 500, 50);
         pButtons.setBounds(0, 50, 500, 50);
         pLista.setBounds(0, 100, 500, 500);
@@ -220,8 +238,12 @@ public class LimiteImovel extends JFrame implements ActionListener {
         pMain.add(pButtons);
         pMain.add(pLista);
 
-        frConsultar.getContentPane().add(pMain);
-        frConsultar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pMain.setPreferredSize(new Dimension(500, 600));
+        JScrollPane scroll = new JScrollPane(pMain, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        frConsultar.getContentPane().add(scroll);
+        frConsultar.pack();
+        frConsultar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frConsultar.setVisible(true);
     }
 }
