@@ -199,18 +199,16 @@ public class LimiteImovel extends JFrame implements ActionListener {
         ArrayList<String> lista = ctrImovel.listarImoveis();
 
         JPanel pLista = new JPanel();
-        pLista.setLayout(new GridLayout(lista.size(), 1, 0, 5));
+        pLista.setLayout(null);
 
         ButtonGroup grp = new ButtonGroup();
 
         int i = 1;
+        int y = 110;
         if (lista.size() != 0) {
             for (String s : lista) {
-                JPanel pUnidade = new JPanel();//Painel que conterá as listas de imoveis
-                pUnidade.setLayout(null);
-
                 JRadioButton rb = new JRadioButton(String.valueOf(i));
-                rb.setBounds(0, 0, 50, 100);
+                pLista.setBounds(0, y, 50, 100);
 
                 rb.addItemListener(new ItemListener() {
                     @Override
@@ -222,30 +220,27 @@ public class LimiteImovel extends JFrame implements ActionListener {
                     }
                 });
                 grp.add(rb);
-                pUnidade.add(rb);
+                pLista.add(rb);
 
                 JTextArea text = new JTextArea(s);
-                text.setBounds(50, 0, 500, 100);
+                text.setBounds(50, y, 500, 100);
 
-                pUnidade.add(text);
-                pLista.add(pUnidade);
+                pLista.add(text);
                 i++;
+                y += 110;
             }
         }
 
+        pLista.add(pLabel);
+        pLista.add(pButtons);
+        
         pLabel.setBounds(0, 0, 500, 50);
         pButtons.setBounds(0, 50, 500, 50);
-        pLista.setBounds(0, 100, 500, 500);
 
-        pMain.add(pLabel);
-        pMain.add(pButtons);
-        pMain.add(pLista);
-
-        pMain.setPreferredSize(new Dimension(500, 600));
-        JScrollPane scroll = new JScrollPane(pMain, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        pLista.setPreferredSize(new Dimension(500, 600));
+        JScrollPane scroll = new JScrollPane(pLista, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         frConsultar.getContentPane().add(scroll);
-        frConsultar.pack();
         frConsultar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frConsultar.setVisible(true);
     }
@@ -258,7 +253,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         JPanel pEdita = new JPanel();
 
         Imovel i = ctrImovel.getLista().get(index);
-        
+
         //Inicializa TextFields 
         JTextField tfCodigo = new JTextField(String.valueOf(i.getCodigo()));
         JTextField tfTipo = new JTextField(i.getTipo());
