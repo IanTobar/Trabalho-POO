@@ -38,4 +38,13 @@ public class ControleImovel {//abre classe ControleImovel
         
         return lista;
     }
+    
+    public ArrayList<Imovel> getLista(){
+        return listaImoveis;
+    }
+    
+    public void editaLista(int index, Imovel i){
+        listaImoveis.remove(index);
+        listaImoveis.add(index, i);
+    }
 }//fecha classe ControleImovel

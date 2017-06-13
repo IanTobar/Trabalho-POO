@@ -34,8 +34,26 @@ public class Imovel {//abre classe Imovel
         this.precoSolicitado = precoSolicitado < 0.0 ? 0.0 : precoSolicitado;
         
     }//fecha setPrecoSolicitado
-    
-    
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setNomeVendedor(String nomeVendedor) {
+        this.nomeVendedor = nomeVendedor;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
     
     public int getCodigo() {
         return codigo;
