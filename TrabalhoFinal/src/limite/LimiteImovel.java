@@ -209,7 +209,8 @@ public class LimiteImovel extends JFrame implements ActionListener {
             for (String s : lista) {
                 JRadioButton rb = new JRadioButton(String.valueOf(i));
                 pLista.setBounds(0, y, 50, 100);
-
+                rb.setBounds(0,y,50,50);
+                
                 rb.addItemListener(new ItemListener() {
                     @Override
                     public void itemStateChanged(ItemEvent e) {
@@ -237,6 +238,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         pLabel.setBounds(0, 0, 500, 50);
         pButtons.setBounds(0, 50, 500, 50);
 
+        frConsultar.setSize(500,600);
         pLista.setPreferredSize(new Dimension(500, 600));
         JScrollPane scroll = new JScrollPane(pLista, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
