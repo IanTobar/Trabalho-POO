@@ -47,4 +47,8 @@ public class ControleImovel {//abre classe ControleImovel
         listaImoveis.remove(index);
         listaImoveis.add(index, i);
     }
+    
+    public void removeLista(int index){
+        listaImoveis.remove(index);
+    }
 }//fecha classe ControleImovel

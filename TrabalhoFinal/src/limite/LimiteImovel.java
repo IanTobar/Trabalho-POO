@@ -186,7 +186,9 @@ public class LimiteImovel extends JFrame implements ActionListener {
         bExcluir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Essa porra vai excluir um dia");
+                frConsultar.dispose();
+                ctrImovel.removeLista(index);
+                listaImoveis();
             }
         });
 
@@ -250,10 +252,10 @@ public class LimiteImovel extends JFrame implements ActionListener {
 
     public void editaImovel(int index) {
         //Inicializa Tela
-        JFrame frCadastra = new JFrame();
+        JFrame frEdita = new JFrame();
 
         //Inicializa Painel
-        JPanel pCadastro = new JPanel();
+        JPanel pEdita = new JPanel();
 
         Imovel i = ctrImovel.getLista().get(index);
         
@@ -278,7 +280,7 @@ public class LimiteImovel extends JFrame implements ActionListener {
         JButton btSubmit = new JButton("Cadastrar");
         JButton btCancelar = new JButton("Cancelar");
 
-        pCadastro.setLayout(null);
+        pEdita.setLayout(null);
 
         //Listener dos botões
         btSubmit.addActionListener(new ActionListener() {
@@ -296,6 +298,8 @@ public class LimiteImovel extends JFrame implements ActionListener {
                     i.setPrecoSolicitado(Double.parseDouble(tfPreco.getText()));
                     i.setData(tfData.getText());
                     ctrImovel.editaLista(index, i);
+                    frEdita.dispose();
+                    listaImoveis();
                     //frCadastra.dispose();
                 }
             }
@@ -303,7 +307,8 @@ public class LimiteImovel extends JFrame implements ActionListener {
         btCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frCadastra.dispose();
+                frEdita.dispose();
+                listaImoveis();
             }
         });
 
@@ -328,28 +333,28 @@ public class LimiteImovel extends JFrame implements ActionListener {
         btCancelar.setBounds(200, 425, 100, 25);
 
         //-Adição dos elementos no painel-//
-        pCadastro.add(tfCodigo);
-        pCadastro.add(tfTipo);
-        pCadastro.add(tfDescricao);
-        pCadastro.add(tfProprietario);
-        pCadastro.add(tfPreco);
-        pCadastro.add(tfData);
+        pEdita.add(tfCodigo);
+        pEdita.add(tfTipo);
+        pEdita.add(tfDescricao);
+        pEdita.add(tfProprietario);
+        pEdita.add(tfPreco);
+        pEdita.add(tfData);
 
-        pCadastro.add(lbLogo);
-        pCadastro.add(lbCodigo);
-        pCadastro.add(lbTipo);
-        pCadastro.add(lbDescricao);
-        pCadastro.add(lbProprietario);
-        pCadastro.add(lbPreco);
-        pCadastro.add(lbData);
+        pEdita.add(lbLogo);
+        pEdita.add(lbCodigo);
+        pEdita.add(lbTipo);
+        pEdita.add(lbDescricao);
+        pEdita.add(lbProprietario);
+        pEdita.add(lbPreco);
+        pEdita.add(lbData);
 
-        pCadastro.add(btSubmit);
-        pCadastro.add(btCancelar);
+        pEdita.add(btSubmit);
+        pEdita.add(btCancelar);
 
         //Ajustes no frame
-        frCadastra.setSize(500, 500);
-        frCadastra.getContentPane().add(pCadastro);
-        frCadastra.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frCadastra.setVisible(true);
+        frEdita.setSize(500, 500);
+        frEdita.getContentPane().add(pEdita);
+        frEdita.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frEdita.setVisible(true);
     }
 }
