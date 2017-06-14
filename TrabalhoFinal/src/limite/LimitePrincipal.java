@@ -14,7 +14,7 @@ import javax.swing.*;
 public class LimitePrincipal extends JFrame implements ActionListener {
     
     ControlePrincipal ctrPrincipal;//objeto responsável pelo controle desta visao
-    
+    ControleImovel ctrImovel = new ControleImovel("Vazio");
     ControleCorretor ctrCorretor = new ControleCorretor();
     
     LimiteCorretor lmtCorretor;
@@ -27,6 +27,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
 
     //Declaração dos itens dos menus
     JMenuItem miCadastImovel;
+    JMenuItem miConsulImovel;
     JMenuItem miCadastCorretor;
     JMenuItem miListCorretor;
     
@@ -88,6 +89,13 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         mImovel.add(miCadastImovel);//adicionar o menu item no sub menu sm
         miCadastImovel.addActionListener(this);//adicionar listener no miCadastImovel
         
+        // Cria um item de menu e o adiciona ao submenu
+        //possui todas as propriedades comuns de um botão
+        miConsulImovel = new JMenuItem("Consultar");
+        mImovel.add(miConsulImovel);//adicionar o menu item no sub menu sm
+        miConsulImovel.addActionListener(this);//adicionar listener no miCadastImovel
+        
+        
         //Inicialiação dos conteudos
         panel = new JPanel();
 
@@ -106,7 +114,13 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         
         if(ae.getSource().equals(miCadastImovel)){//se selecionar o cadastrar do imovel
-            new ControleImovel();//chama constrolador do imovel
+            LimiteImovel lmtImovel = new LimiteImovel(ctrImovel);
+            lmtImovel.cadastraImovel();
+        }
+        
+        if(ae.getSource().equals(miConsulImovel)){//se selecionar a consulta do imovel
+            LimiteImovel lmtImovel = new LimiteImovel(ctrImovel);
+            lmtImovel.listaImoveis();
         }
         
         if(ae.getSource().equals(miCadastCorretor)){//se selecionar o cadastrar do corretor
