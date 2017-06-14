@@ -27,7 +27,8 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     private JLabel lbCreci;
     private JLabel lbSalario;
     private JLabel lbComissao;
-
+    
+    //declaração dos botões
     private JButton btCadastrar;//declaração do botao de cadastrar
     private JComboBox cbTipoCorretor;//declaracao do combobox que terá os tipos de corretores
 
@@ -99,14 +100,22 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
 
             //chama metodo insereContratado da classe ControleCorretor
             ctrCorretor.insereContratado(pNome, pCreci, pSalario, pData);
-            
+            //limpa os campos
+            tfNomeCorretor.setText("");
+            tfCreci.setText("");
+            tfSalario.setText("");
+            tfComissao.setText("");
         }//fecha if 01
         else{//abre else do if 01
             System.out.println(pNome + " " + pCreci + " " + pComissao + " " + pTipo);
             
             //chama metodo insereComissionado da classe ControleCorretor
             ctrCorretor.insereComissionado(pNome, pCreci, pComissao);
-            
+            //limpa os campos
+            tfNomeCorretor.setText("");
+            tfCreci.setText("");
+            tfComissao.setText("");
+            tfSalario.setText("");
         }//fecha else do if 01
 
     }//fecha actionPerformed

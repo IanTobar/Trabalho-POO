@@ -5,7 +5,10 @@
 package modelo;
 
 //classe abstrata dos corretores
-public abstract class Corretor {//abre classe Corretor
+
+import java.io.Serializable;
+
+public abstract class Corretor implements Serializable  {//abre classe Corretor
     
     private String aNome;
     private int aCreci;
