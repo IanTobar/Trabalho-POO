@@ -16,6 +16,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     ControlePrincipal ctrPrincipal;//objeto responsável pelo controle desta visao
     ControleImovel ctrImovel = new ControleImovel("Vazio");
     ControleCorretor ctrCorretor = new ControleCorretor();
+    ControleVenda ctrVenda;
     
     LimiteCorretor lmtCorretor;
     
@@ -35,7 +36,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     
     //construtor, passa o controle para o construtor
     public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
-
+        
         this.ctrPrincipal = ctrPrincipal;//Armazena o controlador Principal numa variavel
 
         // Constrói a barra de menus
@@ -154,7 +155,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         
         if(ae.getSource().equals(miCadastVenda)){
           
-            ctr
+            ctrPrincipal.ctrVenda.mostraFormulario();
            
         }
         

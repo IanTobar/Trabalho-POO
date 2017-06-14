@@ -19,6 +19,8 @@ import modelo.CorretorContratado;
 
 public class ControleCorretor {//abre classe ControleCorretor
 
+    ControlePrincipal ctrPrincipal;
+    
     LimiteCorretor lmtCorretor;
     LimiteListaCorretor lmtListaCorretor;
 
@@ -28,7 +30,7 @@ public class ControleCorretor {//abre classe ControleCorretor
     //private final String arquivo = "disc.dat";    
     //construtor
     public ControleCorretor() {//abre ControleCorretor
-
+        this.ctrPrincipal = ctrPrincipal;
         //new LimiteCorretor(this);
     }//fecha ControleCorretor
 
@@ -72,6 +74,10 @@ public class ControleCorretor {//abre classe ControleCorretor
         return str;
 
     }//fecha listaCorretor
+    
+    public ArrayList<Corretor> getList(){
+        return listaCorretor;
+    }
 
     /*
     //metodo para serializa o corretor contratado, para salvar em arquivo

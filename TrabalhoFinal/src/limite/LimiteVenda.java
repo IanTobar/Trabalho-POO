@@ -5,10 +5,21 @@
  */
 package limite;
 
+import controle.*;
+
 /**
  *
  * @author Ruan
  */
 public class LimiteVenda {
+
+    ControleVenda ctrVenda;
     
+    public LimiteVenda(ControleVenda ctrVenda)
+    {
+        this.ctrVenda = ctrVenda;
+    }
+    
+    
+
 }

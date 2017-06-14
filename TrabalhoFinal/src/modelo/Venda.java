@@ -16,13 +16,14 @@ public class Venda {
     String nomeComprador;//Nome do comprador do imovel
     Date dataVenda;//Data da venda
     String corretorResponsavel;
-    
-    public Venda(double valorReal, String nomeComprador, Date dataVenda) {
+
+    public Venda(double valorReal, String nomeComprador, Date dataVenda, String corretorResponsavel) {
         this.valorReal = valorReal;
         this.nomeComprador = nomeComprador;
         this.dataVenda = dataVenda;
+        this.corretorResponsavel = corretorResponsavel;
     }
-
+    
     public double getValorReal() {
         return valorReal;
     }

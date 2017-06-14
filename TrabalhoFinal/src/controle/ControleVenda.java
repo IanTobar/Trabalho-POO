@@ -24,7 +24,11 @@ public class ControleVenda {
     
     public ControleVenda(ControlePrincipal ctrPrincipal) {
         this.ctrPrincipal = ctrPrincipal;
-        lmtVenda = new LimiteVenda(); 
+        lmtVenda = new LimiteVenda(this); 
+    }
+    
+    public void mostraFormulario(){
+        new CadastraVenda(ctrPrincipal);
     }
     
     public void cadastraVenda(double valorReal,String nomeComprador, Date dataVenda, String nomeCorretor){
