@@ -1,7 +1,7 @@
 //BRUNO GUILHERME LUNARDI
 //RUAN MICHEL ADABO
 //IAN MARCELO TOBARmite;
-
+package limite;
 import controle.*;
 
 import java.awt.*;

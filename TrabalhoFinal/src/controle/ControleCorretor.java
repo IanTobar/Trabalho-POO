@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import limite.LimiteCorretor;
 import limite.LimiteListaCorretor;
 import modelo.Corretor;
@@ -24,7 +25,6 @@ public class ControleCorretor {//abre classe ControleCorretor
 
     private ArrayList<Corretor> listaCorretor = new ArrayList<Corretor>();//array para Corretor
 
-//    private final String arquivo = "disc.dat";//constante
     //construtor
     public ControleCorretor() {//abre ControleCorretor
 
@@ -32,8 +32,7 @@ public class ControleCorretor {//abre classe ControleCorretor
         try {
             this.desserializaCorretor();
         } catch (Exception e) {
-            System.err.println("Aqui");
-            
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE);
         }
 
     }//fecha ControleCorretor
@@ -45,7 +44,54 @@ public class ControleCorretor {//abre classe ControleCorretor
         CorretorContratado contratado = new CorretorContratado(pNome, pCreci, pSalario, pDate);//cria objeto contratado
         listaCorretor.add(contratado);//adiciona o contratado no array list de corretor
 
+        try {
+            this.serializaCorretor();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//fecha metodo inseteContratado    
+
+    public void editaCorretor(int index) {//abre editaCorretor
+
+        if (getListaCorretor().get(index) instanceof CorretorContratado) {//abre if 01
+            //pega o corretor que foi selecionado na lista, através do seu index
+            CorretorContratado auxContratado = (CorretorContratado) getListaCorretor().get(index);
+            //pega novo salario
+            double salarioNovo = Double.parseDouble(JOptionPane.showInputDialog("Informe o novo salario"));
+            //altera o novo salario
+            auxContratado.setaSalarioFixo(salarioNovo);
+        }//fecha if 01
+        else {//abre else do if 01
+            //pega corretor comissionado selecionado na lista
+            CorretorComissionado auxComissionado = (CorretorComissionado) getListaCorretor().get(index);
+            //pega nova comissão
+            double comissaoNova = Double.parseDouble(JOptionPane.showInputDialog("Informe a nova comissão"));
+            //altera comissão
+            auxComissionado.setaComissao(comissaoNova);
+        }//fecha else do if 01
+
+        //Grava edição em arquivo
+        try {
+            this.serializaCorretor();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//fecha editaCorretor
+
+    public void excluiCorretor(int index) {//abre excluiCorretor
+        //remove elemento da lista, através do indice passado pelo LimiteListaCorretor.java
+        getListaCorretor().remove(index);
+
+        //Grava edição em arquivo
+        try {
+            this.serializaCorretor();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//fecha excluiCorretor
 
     //metodo para inserir vendedor contratado
     public void insereComissionado(String pNome, int pCreci, double pComissao) {//abre metodo insereContratado
@@ -104,7 +150,7 @@ public class ControleCorretor {//abre classe ControleCorretor
         File objFile = new File("corretores.dat");
         //se o arquivo existir
         if (objFile.exists()) {//abre if 01
-            
+
             //objeto de stream de bytes
             FileInputStream objFileIS = new FileInputStream("corretores.dat");
             //objeto de stream de bytes
@@ -113,7 +159,7 @@ public class ControleCorretor {//abre classe ControleCorretor
             listaCorretor = (ArrayList<Corretor>) objIS.readObject();
             //fecha stream
             objIS.close();
-            
+
         }//fecha if 01
 
     }//fecha desserializaDisciplina
