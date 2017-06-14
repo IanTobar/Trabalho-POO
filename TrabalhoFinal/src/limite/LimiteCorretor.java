@@ -16,22 +16,41 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     //controlador
     ControleCorretor ctrCorretor;
 
-    //declaração dos JTextField
-    private JTextField tfNomeCorretor;
-    private JTextField tfCreci;
+    //declaração dos JTextField Corretor Contratado
+    private JTextField tfNomeContratado;
+    private JTextField tfCreciContratado;
     private JTextField tfSalario;
-    private JTextField tfComissao;
 
-    //declaração dos JLabel
-    private JLabel lbNomeCorretor;
-    private JLabel lbCreci;
+    //declaração dos JTextField Corretor Comissionado
+    private JTextField tfNomeComissionados;
+    private JTextField tfCreciComissionado;
+    private JTextField tfComissao;
+    
+    //declaração dos JLabel Corretor Contratado
+    private JLabel lbNomeContratado;
+    private JLabel lbCreciContratado;
+    //declaração dos JLabel Corretor Comissionado
+    private JLabel lbNomeComissionados;
+    private JLabel lbCreciComissionado;
+    
     private JLabel lbSalario;
     private JLabel lbComissao;
     
     //declaração dos botões
-    private JButton btCadastrar;//declaração do botao de cadastrar
-    private JComboBox cbTipoCorretor;//declaracao do combobox que terá os tipos de corretores
-
+    private JButton btCadastrar;
+    private JButton btCadastrarComissionado;
+    
+    //declaração do JTabbedPane
+    private JTabbedPane tab;
+    //variaveis dos corretores
+    private String pNome;
+    private int pCreci;
+    private double pSalario;
+    Date pData;
+    double pComissao;
+    
+    //variavel para verificar qual tab foi selecionada (0 - corretor contratado, 1 - comissionado)
+    int indexTab = 0;
     //construtor
     public LimiteCorretor(ControleCorretor ctrCorretor) {//abre construtor 01
 
@@ -41,42 +60,66 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         this.ctrCorretor = ctrCorretor;
 
         //criação dos objetos
-        tfNomeCorretor = new JTextField(20);
-        tfCreci = new JTextField(20);
+        tfNomeContratado = new JTextField(20);
+        tfNomeComissionados = new JTextField(20);
+        tfCreciContratado = new JTextField(20);
+        tfCreciComissionado = new JTextField(20);
         tfSalario = new JTextField(20);
         tfComissao = new JTextField(10);
-        cbTipoCorretor = new JComboBox();
         btCadastrar = new JButton("Cadastrar");
-        lbCreci = new JLabel("Digite o Creci");
-        lbNomeCorretor = new JLabel("Digite o nome do corretor");
-        lbSalario = new JLabel("Digite o salario do corretor (caso este for contratado)");
+        btCadastrarComissionado = new JButton("Cadastrar");
+        lbCreciContratado = new JLabel("Digite o Creci");
+        lbCreciComissionado = new JLabel("Digite o Creci");
+        lbNomeContratado = new JLabel("Digite o nome do corretor");
+        lbNomeComissionados = new JLabel("Digite o nome do corretor");
+        lbSalario = new JLabel("Digite o salario do corretor");
         lbComissao = new JLabel("Comissão");
-
-        //adicionar itens no comboBox
-        cbTipoCorretor.addItem("Comissionado");
-        cbTipoCorretor.addItem("Contratado");
+        tab = new JTabbedPane();
 
         btCadastrar.addActionListener(this);//adiciona listener no botão
-
-        //criação do painel
-        JPanel p = new JPanel();
-
-        //adiciona os objetos ao painel p
-        p.add(lbNomeCorretor);
-        p.add(tfNomeCorretor);
-        p.add(lbSalario);
-        p.add(tfSalario);
-        p.add(lbCreci);
-        p.add(tfCreci);
-        p.add(cbTipoCorretor);
-        p.add(lbComissao);
-        p.add(tfComissao);
-        p.add(btCadastrar);
+        btCadastrarComissionado.addActionListener(this);//adiciona listener no botão
+                
+        //criação do painel p1 (painel pra corretor contratado)
+        JPanel p1 = new JPanel();
+        //painel para corretores comissionados
+        JPanel p2 = new JPanel();
         
-        p.setLayout(new GridLayout(10, 2));//grade 4 x 4
+        //adiciona os objetos ao painel p1 (contratado)
+        p1.add(lbNomeContratado);
+        p1.add(tfNomeContratado);
+        p1.add(lbCreciContratado);
+        p1.add(tfCreciContratado);
+        p1.add(lbSalario);
+        p1.add(tfSalario);
+        p1.add(btCadastrar);
 
+        p2.add(lbNomeComissionados);
+        p2.add(tfNomeComissionados);        
+        p2.add(lbCreciComissionado);
+        p2.add(tfCreciComissionado);
+        p2.add(lbComissao);
+        p2.add(tfComissao);        
+        p2.add(btCadastrarComissionado);
+        
+        //seta layout dos paineis
+        p1.setLayout(new GridLayout(7, 2));
+        p2.setLayout(new GridLayout(7, 2));        
+        //adiciona JTabbedPane dos corretores contratados
+        tab.addTab("Contratado", null, p1, "Cadastra Corretor Contratado");//titulo, icone, painel, ajuda
+        tab.addTab("Comissionado", null, p2, "Cadastra Corretor Comissionado");//titulo, icone, painel, ajuda
+        //adiciona listener na JTabbedPane tab, para saber qual painel está selecionado
+        tab.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+               
+                System.out.println(tab.getSelectedIndex());
+                
+                indexTab = tab.getSelectedIndex();//atribui o index do painel selecionado no JTabbedPane
+                
+            }
+        });        
+        
         //como esta classe é uma janela:
-        this.add(p);//adiciona o painel nesta janela
+        this.add(tab);//adiciona o painel nesta janela
         this.pack();//empacota tudo que está no painel JPane
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//fecha o programa
         this.setSize(500, 500);//define tamanho da janela
@@ -87,33 +130,41 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     @Override
     public void actionPerformed(ActionEvent ae) {//abre actionPerformed
 
-        String pNome = tfNomeCorretor.getText();
-        int pCreci = Integer.parseInt(tfCreci.getText());
-        double pSalario = Double.parseDouble(tfSalario.getText());
-        Date pData = new Date();
-        String pTipo = (String) cbTipoCorretor.getSelectedItem();
-        double pComissao = Double.parseDouble(tfComissao.getText());
 
-        if ((ae.getSource() == btCadastrar) && (pTipo == "Contratado")) {//abre if 01
-            
-            System.out.println(pNome + " " + pCreci + " " + pSalario + " " + pTipo);
+
+        if ((ae.getSource() == btCadastrar) && (indexTab == 0)) {//abre if 01
+        
+            pNome = tfNomeContratado.getText();
+            pCreci = Integer.parseInt(tfCreciContratado.getText());        
+
+            pSalario = Double.parseDouble(tfSalario.getText());                
+            pData = new Date();                            
+    
+            System.out.println(pNome + " " + pCreci + " " + pSalario);
 
             //chama metodo insereContratado da classe ControleCorretor
             ctrCorretor.insereContratado(pNome, pCreci, pSalario, pData);
+            
             //limpa os campos
-            tfNomeCorretor.setText("");
-            tfCreci.setText("");
+            tfNomeContratado.setText("");
+            tfCreciContratado.setText("");
             tfSalario.setText("");
             tfComissao.setText("");
+            
         }//fecha if 01
         else{//abre else do if 01
-            System.out.println(pNome + " " + pCreci + " " + pComissao + " " + pTipo);
+            pNome = tfNomeComissionados.getText();
+            pCreci = Integer.parseInt(tfCreciComissionado.getText());        
+            
+            pComissao = Double.parseDouble(tfComissao.getText());
+            
+            System.out.println(pNome + " " + pCreci + " " + pComissao);
             
             //chama metodo insereComissionado da classe ControleCorretor
             ctrCorretor.insereComissionado(pNome, pCreci, pComissao);
             //limpa os campos
-            tfNomeCorretor.setText("");
-            tfCreci.setText("");
+            tfNomeComissionados.setText("");
+            tfCreciComissionado.setText("");
             tfComissao.setText("");
             tfSalario.setText("");
         }//fecha else do if 01
