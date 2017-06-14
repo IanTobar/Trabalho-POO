@@ -25,12 +25,12 @@ public class CadastraVenda extends javax.swing.JFrame {
 
         initComponents();
 
-        String[] nomes = new String[ctrPrincipal.ctrCorretor.getList().size()];
+        String[] nomes = new String[ctrPrincipal.ctrCorretor.getLista().size()];
 
         System.out.println("teste1");
 
         int i = 0;
-        for (Corretor c : ctrPrincipal.ctrCorretor.getList()) {
+        for (Corretor c : ctrPrincipal.ctrCorretor.getLista()) {
             nomes[i] = c.getaNome();
             System.out.println(c.getaNome());
             i++;

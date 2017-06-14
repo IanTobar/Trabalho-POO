@@ -16,15 +16,15 @@ import modelo.*;
  */
 public class ControleVenda {
     
-    LimiteVenda lmtVenda;
+    public LimiteVenda lmtVenda;
 
-    ControlePrincipal ctrPrincipal;
+    public ControlePrincipal ctrPrincipal;
     
-    ArrayList<Venda> listaVendas = new ArrayList<Venda>();
+    private ArrayList<Venda> listaVendas = new ArrayList<Venda>();
     
     public ControleVenda(ControlePrincipal ctrPrincipal) {
         this.ctrPrincipal = ctrPrincipal;
-        lmtVenda = new LimiteVenda(this); 
+        this.lmtVenda = new LimiteVenda(this); 
     }
     
     public void mostraFormulario(){

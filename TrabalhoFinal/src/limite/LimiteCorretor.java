@@ -27,19 +27,19 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
     private JLabel lbCreci;
     private JLabel lbSalario;
     private JLabel lbComissao;
-    
+
     //declaração dos botões
     private JButton btCadastrar;//declaração do botao de cadastrar
     private JComboBox cbTipoCorretor;//declaracao do combobox que terá os tipos de corretores
 
     //construtor
     public LimiteCorretor(ControleCorretor ctrCorretor) {//abre construtor 01
-
-        //chama construtor da classe JFrame
-        super("Cadastra Corretor");
-
         this.ctrCorretor = ctrCorretor;
-
+    }//fecha construtor 01
+    
+    public void cadastraCorretor(){
+        JFrame frCadastra = new JFrame();
+ 
         //criação dos objetos
         tfNomeCorretor = new JTextField(20);
         tfCreci = new JTextField(20);
@@ -76,14 +76,14 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         p.setLayout(new GridLayout(10, 2));//grade 4 x 4
 
         //como esta classe é uma janela:
-        this.add(p);//adiciona o painel nesta janela
-        this.pack();//empacota tudo que está no painel JPane
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//fecha o programa
-        this.setSize(500, 500);//define tamanho da janela
-        this.setVisible(true);//torna a janela visivel      
+        frCadastra.add(p);//adiciona o painel nesta janela
+        frCadastra.pack();//empacota tudo que está no painel JPane
+        frCadastra.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);//fecha o programa
+        frCadastra.setSize(500, 500);//define tamanho da janela
+        frCadastra.setVisible(true);//torna a janela visivel      
 
-    }//fecha construtor 01
-
+    }
+    
     @Override
     public void actionPerformed(ActionEvent ae) {//abre actionPerformed
 
@@ -95,7 +95,7 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         double pComissao = Double.parseDouble(tfComissao.getText());
 
         if ((ae.getSource() == btCadastrar) && (pTipo == "Contratado")) {//abre if 01
-            
+
             System.out.println(pNome + " " + pCreci + " " + pSalario + " " + pTipo);
 
             //chama metodo insereContratado da classe ControleCorretor
@@ -106,9 +106,9 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
             tfSalario.setText("");
             tfComissao.setText("");
         }//fecha if 01
-        else{//abre else do if 01
+        else {//abre else do if 01
             System.out.println(pNome + " " + pCreci + " " + pComissao + " " + pTipo);
-            
+
             //chama metodo insereComissionado da classe ControleCorretor
             ctrCorretor.insereComissionado(pNome, pCreci, pComissao);
             //limpa os campos

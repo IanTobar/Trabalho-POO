@@ -1,27 +1,1 @@
-//BRUNO GUILHERME LUNARDI
-//RUAN MICHEL ADABO
-//IAN MARCELO TOBAR
-package controle;
-
-import limite.LimitePrincipal;
-
-public class ControlePrincipal {//abre classe ControlePrincipal
-
-    public ControleImovel ctrImovel;
-    public ControleVenda ctrVenda;
-    public ControleCorretor ctrCorretor;
-
-    LimitePrincipal lmtPrincipal;
-
-    public ControlePrincipal() {
-        ctrImovel = new ControleImovel("Vazio");
-        ctrVenda = new ControleVenda(this);
-        ctrCorretor = new ControleCorretor();
-        lmtPrincipal = new LimitePrincipal(this);
-    }
-
-    public static void main(String[] args) {
-        new ControlePrincipal();
-    }
-
-}//fecha classe ControlePrincipal
+//BRUNO GUILHERME LUNARDI//RUAN MICHEL ADABO//IAN MARCELO TOBARpackage controle;import limite.LimitePrincipal;public class ControlePrincipal {//abre classe ControlePrincipal    //Controladores    public ControleImovel ctrImovel;    public ControleVenda ctrVenda;    public ControleCorretor ctrCorretor;    //Limites    public LimitePrincipal lmtPrincipal;    public ControlePrincipal() {        //Inicializa os controladores fazendo com que possamos contrala-los        //por meio do controle principal        ctrImovel = new ControleImovel(this);        ctrVenda = new ControleVenda(this);        ctrCorretor = new ControleCorretor(this);        //Inicia o menu principal        lmtPrincipal = new LimitePrincipal(this);    }    public static void main(String[] args) {        new ControlePrincipal();    }}//fecha classe ControlePrincipal
