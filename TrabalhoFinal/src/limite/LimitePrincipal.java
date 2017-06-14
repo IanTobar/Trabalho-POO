@@ -30,6 +30,8 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     JMenuItem miConsulImovel;
     JMenuItem miCadastCorretor;
     JMenuItem miListCorretor;
+    JMenuItem miCadastVenda;
+    JMenuItem miConsulVenda;
     
     //construtor, passa o controle para o construtor
     public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
@@ -93,7 +95,19 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         //possui todas as propriedades comuns de um botão
         miConsulImovel = new JMenuItem("Consultar");
         mImovel.add(miConsulImovel);//adicionar o menu item no sub menu sm
-        miConsulImovel.addActionListener(this);//adicionar listener no miCadastImovel
+        miConsulImovel.addActionListener(this);//adicionar listener
+        
+        // Cria um item de menu e o adiciona ao submenu
+        //possui todas as propriedades comuns de um botão
+        miCadastVenda = new JMenuItem("Cadastrar");
+        mVendas.add(miCadastVenda);//adicionar o menu item no sub menu sm
+        miCadastVenda.addActionListener(this);//adicionar listener
+        
+        // Cria um item de menu e o adiciona ao submenu
+        //possui todas as propriedades comuns de um botão
+        miConsulVenda = new JMenuItem("Consultar");
+        mVendas.add(miConsulVenda);//adicionar o menu item no sub menu sm
+        miConsulVenda.addActionListener(this);//adicionar listener
         
         
         //Inicialiação dos conteudos
@@ -136,6 +150,12 @@ public class LimitePrincipal extends JFrame implements ActionListener {
             
           ctrCorretor.listaCorretor();
             
+        }
+        
+        if(ae.getSource().equals(miCadastVenda)){
+          
+            ctr
+           
         }
         
     }
