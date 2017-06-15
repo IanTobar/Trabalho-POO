@@ -1,10 +1,12 @@
 //BRUNO GUILHERME LUNARDI - 2016003830
-//IAN MARCEL TOBAR
-//RUAN MICHEL ADABO
+//IAN MARCEL TOBAR - 2016001693
+//RUAN MICHEL ADABO - 2016015278 
 
 package modelo;
 
-public class Imovel {//abre classe Imovel
+import java.io.Serializable;
+
+public class Imovel  implements Serializable  {//abre classe Imovel
     
     int codigo;//Codigo do imovel
     String tipo;//Tipo do imovel

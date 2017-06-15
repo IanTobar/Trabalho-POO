@@ -1,54 +1,1 @@
-//BRUNO GUILHERME LUNARDI
-//RUAN MICHEL ADABO
-//IAN MARCELO TOBAR
-package controle;
-
-import java.util.*;
-
-import controle.*;
-import limite.*;
-import modelo.*;
-
-public class ControleImovel {//abre classe ControleImovel
-
-    public LimiteImovel lmtImovel;
-    
-    ArrayList<Imovel> listaImoveis = new ArrayList<Imovel>();
-
-    //construtor 01
-    public ControleImovel(String op) {//abre construtor 01
-        if(op.equals("Limite")){
-            new LimiteImovel(this);
-        }
-    }//fecha construtor 01
-
-    public void cadastraImovel(int codigo, String tipo, String descricao, String nomeProprietario, double precoSolicitado, String data) {
-        listaImoveis.add(new Imovel(codigo, tipo, descricao, nomeProprietario, precoSolicitado, data));
-    }
-    
-    public ArrayList<String> listarImoveis() {
-        ArrayList<String> lista = new ArrayList<String>();
-        String aux;
-        
-        for (Imovel i : listaImoveis) {
-            aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
-                    + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
-            lista.add(aux);
-        }
-        
-        return lista;
-    }
-    
-    public ArrayList<Imovel> getLista(){
-        return listaImoveis;
-    }
-    
-    public void editaLista(int index, Imovel i){
-        listaImoveis.remove(index);
-        listaImoveis.add(index, i);
-    }
-    
-    public void removeLista(int index){
-        listaImoveis.remove(index);
-    }
-}//fecha classe ControleImovel
+//BRUNO GUILHERME LUNARDI - 2016003830//IAN MARCEL TOBAR - 2016001693//RUAN MICHEL ADABO - 2016015278package controle;import java.util.*;import controle.*;import java.io.File;import java.io.FileInputStream;import java.io.FileOutputStream;import java.io.ObjectInputStream;import java.io.ObjectOutputStream;import javax.swing.JOptionPane;import limite.*;import modelo.*;public class ControleImovel {//abre classe ControleImovel    public LimiteImovel lmtImovel;    ArrayList<Imovel> listaImoveis = new ArrayList<Imovel>();    //construtor 01    public ControleImovel(String op) {//abre construtor 01        //desserializa aquivo        try {            this.desserializaImovel();        } catch (Exception e) {            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE);        }                if (op.equals("Limite")) {            //cria LimiteImovel            new LimiteImovel(this);        }    }//fecha construtor 01    //metodo para cadastrar imovel    public void cadastraImovel(int codigo, String tipo, String descricao, String nomeProprietario, double precoSolicitado, String data) {//abre cadastraImovel        //adiciona novo imovel no ArrayList listaImoveis        listaImoveis.add(new Imovel(codigo, tipo, descricao, nomeProprietario, precoSolicitado, data));                //grava em arquivo, chama serializaImovel para gravar ArrayList no arquivo        try {            this.serializaImovel();        } catch (Exception e) {            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);        }                    }//fecha cadastraImovel    //metodo para listar imoveis    public ArrayList<String> listarImoveis() {//abre listarImoveis        ArrayList<String> lista = new ArrayList<String>();        String aux;        for (Imovel i : listaImoveis) {            aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "                    + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();            lista.add(aux);        }        return lista;    }    public ArrayList<Imovel> getLista() {        return listaImoveis;    }    public void editaLista(int index, Imovel i) {        listaImoveis.remove(index);        listaImoveis.add(index, i);        //Grava edição em arquivo        try {            this.serializaImovel();        } catch (Exception e) {            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);        }                    }    public void removeLista(int index) {        listaImoveis.remove(index);        //Grava remoção em arquivo        try {            this.serializaImovel();        } catch (Exception e) {            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);        }                    }        //metodo para serializar o imovel, para salvar em arquivo    private void serializaImovel() throws Exception {//abre serializaDisciplina        //Stream de gravação        FileOutputStream objFileOS = new FileOutputStream("imoveis.dat");        //Stream de gravação        ObjectOutputStream objOS = new ObjectOutputStream(objFileOS);        //grava o ArrayList no arquivo        objOS.writeObject(listaImoveis);        //limpa objOS        objOS.flush();        //fecha stream        objOS.close();    }//fecha serializaDisciplina    //metodo para desserializar o arquivo de imoveis    private void desserializaImovel() throws Exception {//abre desserializaDisciplina        //nome do arquivo que será lido        File objFile = new File("imoveis.dat");        //se o arquivo existir        if (objFile.exists()) {//abre if 01            //objeto de stream de bytes            FileInputStream objFileIS = new FileInputStream("imoveis.dat");            //objeto de stream de bytes            ObjectInputStream objIS = new ObjectInputStream(objFileIS);            //converte o objeto lido do arquivo para o tipo ArrayList e atribui ao Array listaCorretor            listaImoveis = (ArrayList<Imovel>) objIS.readObject();            //fecha stream            objIS.close();        }//fecha if 01    }//fecha desserializaDisciplina        }//fecha classe ControleImovel

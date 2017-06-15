@@ -92,7 +92,7 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         p1.add(lbSalario);
         p1.add(tfSalario);
         p1.add(btCadastrar);
-
+        //adiciona os objetos ao painel p2 (comissionado)
         p2.add(lbNomeComissionados);
         p2.add(tfNomeComissionados);        
         p2.add(lbCreciComissionado);
@@ -100,7 +100,6 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         p2.add(lbComissao);
         p2.add(tfComissao);        
         p2.add(btCadastrarComissionado);
-        
         //seta layout dos paineis
         p1.setLayout(new GridLayout(7, 2));
         p2.setLayout(new GridLayout(7, 2));        
@@ -110,8 +109,6 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
         //adiciona listener na JTabbedPane tab, para saber qual painel está selecionado
         tab.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-               
-                System.out.println(tab.getSelectedIndex());
                 
                 indexTab = tab.getSelectedIndex();//atribui o index do painel selecionado no JTabbedPane
                 
@@ -129,9 +126,7 @@ public class LimiteCorretor extends JFrame implements ActionListener {//abre cla
 
     @Override
     public void actionPerformed(ActionEvent ae) {//abre actionPerformed
-
-
-
+        
         if ((ae.getSource() == btCadastrar) && (indexTab == 0)) {//abre if 01
         
             pNome = tfNomeContratado.getText();
