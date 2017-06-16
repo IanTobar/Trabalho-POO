@@ -4,7 +4,9 @@
 
 package modelo;
 
-public class Imovel {//abre classe Imovel
+import java.io.Serializable;
+
+public class Imovel implements Serializable {//abre classe Imovel
     
     int codigo;//Codigo do imovel
     String tipo;//Tipo do imovel
