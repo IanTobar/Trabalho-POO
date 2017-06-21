@@ -10,7 +10,7 @@ import java.util.*;
 public class CorretorContratado extends Corretor  implements Serializable {//abre classeCorretorContratado
 
     private double aSalarioFixo;
-    //private Date aDataAdmissao;
+    private Date aDataAdmissao;
     
     //falta adicionar a venda!!!
     
@@ -22,8 +22,7 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
         super(pNome, pCreci);
 
         setaSalarioFixo(pSalario);//valida salário
-        
-        //this.aDataAdmissao = pDataAdmissao;
+        this.aDataAdmissao = pDataAdmissao;
         
     }//fecha construtor 01
     
@@ -38,7 +37,7 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
         this.aSalarioFixo = aSalarioFixo < 0.0 ? 0.0 : aSalarioFixo;
         
     }//fecha setaSalarioFixo
-/*
+
     public Date getaDataAdmissao() {
         return aDataAdmissao;
     }
@@ -46,7 +45,7 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
     public void setaDataAdmissao(Date aDataAdmissao) {
         this.aDataAdmissao = aDataAdmissao;
     }
-  */  
+
     //retorna o rendimento
     @Override
     public double calculaRenda() {

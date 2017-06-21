@@ -135,8 +135,8 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         }
 
         if (ae.getSource().equals(miListCorretor)) {
-            //OnWork
-            ///ctrCorretor.listaCorretor();
+            
+            ctrPrincipal.ctrCorretor.lmtCorretor.listaCorretores();
         }
 
         if (ae.getSource().equals(miCadastVenda)) {
