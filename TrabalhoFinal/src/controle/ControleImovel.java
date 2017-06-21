@@ -20,22 +20,22 @@ import modelo.*;
 public class ControleImovel {//abre classe ControleImovel
 
     public ControlePrincipal ctrPrincipal;
-    
+
     public LimiteImovel lmtImovel;
 
     private ArrayList<Imovel> listaImoveis = new ArrayList<Imovel>();
 
     //construtor 01
     public ControleImovel(ControlePrincipal ctrPrincipal) {//abre construtor 01
-        
+
         this.ctrPrincipal = ctrPrincipal;
         lmtImovel = new LimiteImovel(this);
-        
+
         try {
             this.desserializaImovel();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE);
-        }        
+        }
 
     }//fecha construtor 01
 
@@ -49,23 +49,24 @@ public class ControleImovel {//abre classe ControleImovel
             JOptionPane.showMessageDialog(null, "Imóvel cadastrado com sucesso!!!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
-        }        
-        
+        }
 
     }
 
-    public ArrayList<String> listarImoveis() {
+    //metodo para listar os imóveis
+    //recebe o pTipo da ComboBox cbTipo, da classe LimiteImovel.java
+    public ArrayList<String> listarImoveis(String pTipo) {
 
         ArrayList<String> lista = new ArrayList<String>();
-
         String aux;
 
         for (Imovel i : listaImoveis) {
-
-            aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
-                    + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
-
-            lista.add(aux);
+            //verifica se o tipo do imóvel selecionado existe
+            if (pTipo.equals(i.getTipo())) {
+                aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
+                        + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
+                lista.add(aux);
+            }
 
         }
 
@@ -91,8 +92,8 @@ public class ControleImovel {//abre classe ControleImovel
             JOptionPane.showMessageDialog(null, "Imóvel editado com sucesso!!!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
-        }                
-        
+        }
+
     }
 
     public void removeLista(int index) {
@@ -105,8 +106,8 @@ public class ControleImovel {//abre classe ControleImovel
             JOptionPane.showMessageDialog(null, "Imóvel removido com sucesso!!!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao gravar arquivo", JOptionPane.ERROR_MESSAGE);
-        }                
-        
+        }
+
     }
 
     //metodo para serializa os imoveis, para salvar em arquivo
@@ -122,7 +123,7 @@ public class ControleImovel {//abre classe ControleImovel
         //fecha stream
         objOS.close();
     }//fecha serializaImovel
-    
+
     //metodo para desserializar o arquivo de imoveis
     private void desserializaImovel() throws Exception {//abre desserializaDisciplina
         //nome do arquivo que será lido
@@ -140,6 +141,5 @@ public class ControleImovel {//abre classe ControleImovel
         }//fecha if 01
 
     }//fecha desserializaDisciplina
-    
-    
+
 }//fecha classe ControleImovel
