@@ -126,7 +126,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         }
 
         if (ae.getSource().equals(miConsulImovel)) {//se selecionar a consulta do imovel
-            ctrPrincipal.ctrImovel.lmtImovel.listaImoveis("Casa");
+            ctrPrincipal.ctrImovel.lmtImovel.listaImoveis("Todos");
         }
 
         if (ae.getSource().equals(miCadastCorretor)) {//se selecionar o cadastrar do corretor

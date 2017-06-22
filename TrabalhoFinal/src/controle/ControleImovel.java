@@ -55,24 +55,33 @@ public class ControleImovel {//abre classe ControleImovel
 
     //metodo para listar os imóveis
     //recebe o pTipo da ComboBox cbTipo, da classe LimiteImovel.java
-    public ArrayList<String> listarImoveis(String pTipo) {
-
+    public ArrayList<String> listarImoveis(String pTipo) {//abre listarImoveis
         ArrayList<String> lista = new ArrayList<String>();
         String aux;
-
-        for (Imovel i : listaImoveis) {
-            //verifica se o tipo do imóvel selecionado existe
-            if (pTipo.equals(i.getTipo())) {
+        //listar todos os tipos de imoveis cadastrados
+        if (pTipo.equals("Todos")) {//abre if 01
+            for (Imovel i : listaImoveis) {//abre for 01
+                //verifica se o tipo do imóvel selecionado no LimitiImovel.listarImoveis existe
                 aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
                         + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
-                lista.add(aux);
-            }
-
-        }
-
+                lista.add(aux);//adiciona imovel no ArrayList lita
+            }//fecha for 01
+        }//fecha if 01 
+        else //se não for todos o tipo selecionado
+        {//abre else do if 01
+            //for para percorrer toda a lista de imovel
+            for (Imovel i : listaImoveis) {//abre for 02
+                //verifica se o tipo do imóvel selecionado no LimitiImovel.listarImoveis existe
+                if (pTipo.equals(i.getTipo())) {//abre if 02
+                    aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
+                            + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
+                    lista.add(aux);//adiciona imovel no ArrayList lita
+                }//fecha if 02
+            }//fecha for 02
+        }//fecha else do if 01
         return lista;
 
-    }
+    }//fecha listarImoveis
 
     public ArrayList<Imovel> getLista() {
 
