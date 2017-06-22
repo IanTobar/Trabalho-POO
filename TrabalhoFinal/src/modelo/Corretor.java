@@ -14,9 +14,9 @@ public abstract class Corretor implements Serializable  {//abre classe Corretor
     private int aCreci;
     
     //construtor 
-    public Corretor( String pNome, int pCreci ){//abre construtor 01
+    public Corretor( String pNome, int pCreci ) throws Exception {//abre construtor 01
         
-        this.aNome = pNome;
+        setaNome(pNome);
         this.aCreci = pCreci;
         
     }//fecha construtor 01
@@ -27,8 +27,14 @@ public abstract class Corretor implements Serializable  {//abre classe Corretor
         return aNome;
     }
 
-    public void setaNome(String aNome) {
-        this.aNome = aNome;
+    public void setaNome(String aNome) throws Exception {
+        if(aNome.equals("")){
+            throw new Exception("Nome inválido!!!");
+        }
+        else{
+            this.aNome = aNome;
+        }
+        
     }
 
     public int getaCreci() {
