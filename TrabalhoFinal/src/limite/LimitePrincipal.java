@@ -29,6 +29,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
     JMenuItem miListCorretor;
     JMenuItem miCadastVenda;
     JMenuItem miConsulVenda;
+    JMenuItem miRelatorioFat;
 
     //construtor, passa o controle para o construtor
     public LimitePrincipal(ControlePrincipal ctrPrincipal) {//abre construtor 01
@@ -104,6 +105,12 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         mVendas.add(miConsulVenda);//adicionar o menu item no sub menu sm
         miConsulVenda.addActionListener(this);//adicionar listener
 
+        // Cria um item de menu e o adiciona ao submenu
+        //possui todas as propriedades comuns de um botão
+        miRelatorioFat = new JMenuItem("Relatorio de Faturamento");
+        mRelatorios.add(miRelatorioFat);//adicionar o menu item no sub menu sm
+        miRelatorioFat.addActionListener(this);//adicionar listener
+        
         //Inicialiação dos conteudos
         panel = new JPanel();
 
@@ -126,7 +133,7 @@ public class LimitePrincipal extends JFrame implements ActionListener {
         }
 
         if (ae.getSource().equals(miConsulImovel)) {//se selecionar a consulta do imovel
-            ctrPrincipal.ctrImovel.lmtImovel.listaImoveis();
+            ctrPrincipal.ctrImovel.lmtImovel.listaImoveis("Todos");
         }
 
         if (ae.getSource().equals(miCadastCorretor)) {//se selecionar o cadastrar do corretor
@@ -145,6 +152,18 @@ public class LimitePrincipal extends JFrame implements ActionListener {
             
         }
 
+        if (ae.getSource().equals(miConsulVenda)) {
+
+            ctrPrincipal.ctrVenda.lmtVenda.listaVendas();
+            
+        }        
+        
+        if (ae.getSource().equals(miRelatorioFat)) {
+
+            ctrPrincipal.relatorioFat();
+            
+        }        
+           
     }
 
 }

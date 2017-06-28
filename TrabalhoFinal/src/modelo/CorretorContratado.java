@@ -1,6 +1,6 @@
 //BRUNO GUILHERME LUNARDI - 2016003830
-//IAN MARCEL TOBAR
-//RUAN MICHEL ADABO
+//IAN MARCEL TOBAR - 2016001693 
+//RUAN MICHEL ADABO - 2016015278 
 
 package modelo;
 
@@ -10,18 +10,19 @@ import java.util.*;
 public class CorretorContratado extends Corretor  implements Serializable {//abre classeCorretorContratado
 
     private double aSalarioFixo;
-    private Date aDataAdmissao;
+    private Calendar aDataAdmissao;
     
     //falta adicionar a venda!!!
     
     //construtor
-    public CorretorContratado( String pNome, int pCreci, double pSalario, Date pDataAdmissao ){//abre construtor 01
+    public CorretorContratado( String pNome, int pCreci, double pSalario, Calendar pDataAdmissao )throws Exception{//abre construtor 01
 
         
         //chama construtor da classe abstrata Corretor.java
         super(pNome, pCreci);
-
+        
         setaSalarioFixo(pSalario);//valida salário
+        
         this.aDataAdmissao = pDataAdmissao;
         
     }//fecha construtor 01
@@ -32,17 +33,22 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
         return aSalarioFixo;
     }
 
-    public void setaSalarioFixo(double aSalarioFixo) {//abre setaSalarioFixo
+    public void setaSalarioFixo(double aSalarioFixo) throws Exception{//abre setaSalarioFixo
 
-        this.aSalarioFixo = aSalarioFixo < 0.0 ? 0.0 : aSalarioFixo;
+        if(aSalarioFixo > 0){
+            this.aSalarioFixo = aSalarioFixo;
+        }else{
+            throw new Exception("Salario não pode ter valor negativo ou zerado!!!");
+        }
+         
         
     }//fecha setaSalarioFixo
 
-    public Date getaDataAdmissao() {
+    public Calendar getaDataAdmissao() {
         return aDataAdmissao;
     }
 
-    public void setaDataAdmissao(Date aDataAdmissao) {
+    public void setaDataAdmissao(Calendar aDataAdmissao) {
         this.aDataAdmissao = aDataAdmissao;
     }
 

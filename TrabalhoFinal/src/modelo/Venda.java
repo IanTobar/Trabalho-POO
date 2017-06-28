@@ -5,23 +5,27 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  * @author Ruan
  */
-public class Venda {
+public class Venda implements Serializable{
     double valorReal;//Valor real da venda
+    double valorNegociado;//Valor negociado da venda
     String nomeComprador;//Nome do comprador do imovel
-    Date dataVenda;//Data da venda
+    Calendar dataVenda;//Data da venda
     String corretorResponsavel;
 
-    public Venda(double valorReal, String nomeComprador, Date dataVenda, String corretorResponsavel) {
+    public Venda(double valorReal, String nomeComprador, Calendar dataVenda, String corretorResponsavel, double valorNegociado) {
         this.valorReal = valorReal;
         this.nomeComprador = nomeComprador;
         this.dataVenda = dataVenda;
         this.corretorResponsavel = corretorResponsavel;
+        this.valorNegociado = valorNegociado;
+        
     }
     
     public double getValorReal() {
@@ -40,12 +44,30 @@ public class Venda {
         this.nomeComprador = nomeComprador;
     }
 
-    public Date getDataVenda() {
+    public Calendar getDataVenda() {
         return dataVenda;
     }
 
-    public void setDataVenda(Date dataVenda) {
+    public void setDataVenda(Calendar dataVenda) {
         this.dataVenda = dataVenda;
     }
+
+    public double getValorNegociado() {
+        return valorNegociado;
+    }
+
+    public void setValorNegociado(double valorNegociado) {
+        this.valorNegociado = valorNegociado;
+    }
+
+    public String getCorretorResponsavel() {
+        return corretorResponsavel;
+    }
+
+    public void setCorretorResponsavel(String corretorResponsavel) {
+        this.corretorResponsavel = corretorResponsavel;
+    }
+    
+    
     
 }

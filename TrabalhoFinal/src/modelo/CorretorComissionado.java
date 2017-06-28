@@ -1,6 +1,6 @@
 //BRUNO GUILHERME LUNARDI - 2016003830
-//IAN MARCEL TOBAR
-//RUAN MICHEL ADABO
+//IAN MARCEL TOBAR - 2016001693 
+//RUAN MICHEL ADABO - 2016015278 
 
 package modelo;
 
@@ -13,7 +13,7 @@ public class CorretorComissionado extends Corretor  implements Serializable {//a
     /////////////////falta adicionar as vendas
     
     //construtor
-    public CorretorComissionado( String pNome, int pCreci, double pComissao ){//abre construtor 01
+    public CorretorComissionado( String pNome, int pCreci, double pComissao ) throws Exception{//abre construtor 01
         
         //chama construtor da classe Corretor.java
         super(pNome, pCreci);
@@ -28,9 +28,13 @@ public class CorretorComissionado extends Corretor  implements Serializable {//a
         return aComissao;
     }
 
-    public void setaComissao(double aComissao) {//abre setaComissao
-        
-        this.aComissao = ( aComissao >= 1 && aComissao <= 3) ? aComissao : 0;
+    public void setaComissao(double aComissao) throws Exception {//abre setaComissao
+        if( (aComissao < 1) || (aComissao > 3)){
+            throw new Exception("Comissão inválida!");
+        }
+        else{
+            this.aComissao = aComissao;
+        }
         
     }//fecha setaComissao
     

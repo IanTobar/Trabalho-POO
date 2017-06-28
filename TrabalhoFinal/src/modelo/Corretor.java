@@ -1,6 +1,6 @@
 //BRUNO GUILHERME LUNARDI - 2016003830
-//IAN MARCEL TOBAR
-//RUAN MICHEL ADABO
+//IAN MARCEL TOBAR - 2016001693 
+//RUAN MICHEL ADABO - 2016015278 
 
 package modelo;
 
@@ -14,10 +14,10 @@ public abstract class Corretor implements Serializable  {//abre classe Corretor
     private int aCreci;
     
     //construtor 
-    public Corretor( String pNome, int pCreci ){//abre construtor 01
-        
-        this.aNome = pNome;
-        this.aCreci = pCreci;
+    public Corretor( String pNome, int pCreci ) throws Exception {//abre construtor 01
+
+        setaNome(pNome);
+        setaCreci(pCreci);
         
     }//fecha construtor 01
    
@@ -27,16 +27,27 @@ public abstract class Corretor implements Serializable  {//abre classe Corretor
         return aNome;
     }
 
-    public void setaNome(String aNome) {
-        this.aNome = aNome;
+    public void setaNome(String aNome) throws Exception {
+        if(aNome.equals("")){
+            throw new Exception("Nome inválido!!!");
+        }
+        else{
+            this.aNome = aNome;
+        }
+        
     }
 
     public int getaCreci() {
         return aCreci;
     }
 
-    public void setaCreci(int aCreci) {
-        this.aCreci = aCreci;
+    public void setaCreci(int aCreci)throws Exception {
+        if(aCreci >= 0){
+            this.aCreci = aCreci;
+        }
+        else{
+            throw new Exception("Valor inválido para o CRECI!");
+        }
     }
     
     //retorna a representação de String do objeto Corretor
