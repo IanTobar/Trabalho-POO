@@ -87,7 +87,7 @@ public class CadastraVenda extends javax.swing.JFrame {
                 objImovel = imv;
                 //pega o index do imovel selecionado
                 indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);
-                System.out.println("Index remover: "+ indexRemove);
+                System.out.println("Index remover: " + indexRemove);
             }
         }//fecha for 01
 
@@ -338,22 +338,27 @@ public class CadastraVenda extends javax.swing.JFrame {
         } else {
             try {
                 Calendar data = Calendar.getInstance();
-                data.set(Integer.parseInt(String.valueOf(cbAno.getSelectedItem())),Integer.parseInt(String.valueOf(cbMes.getSelectedItem())),Integer.parseInt(String.valueOf(cbDia.getSelectedItem())));
-                
-                //chama metodo para cadastrar a venda
-                ctrVenda.cadastraVenda(tfNomeComprador.getText(), data,
-                        cbCorretorResponsavel.getSelectedItem().toString(),
-                        Double.parseDouble(tfValorNegociado.getText()), objImovel
-                );
+                data.set(Integer.parseInt(String.valueOf(cbAno.getSelectedItem())), Integer.parseInt(String.valueOf(cbMes.getSelectedItem())), Integer.parseInt(String.valueOf(cbDia.getSelectedItem())));
+
+                for (Corretor c : ctrVenda.ctrPrincipal.ctrCorretor.getLista()) {
+                    if (c.getaNome().equals(cbCorretorResponsavel.getSelectedItem().toString())) {
+                        //chama metodo para cadastrar a venda
+                        ctrVenda.cadastraVenda(tfNomeComprador.getText(), data,
+                                c,
+                                Double.parseDouble(tfValorNegociado.getText()), objImovel
+                        );
+                    }
+                }
+
                 //chama metodo para remover imovel
-                System.out.println("No clicar do botao Index remover: "+ indexRemove);
+                System.out.println("No clicar do botao Index remover: " + indexRemove);
                 ctrVenda.ctrPrincipal.ctrImovel.removeLista(indexRemove);
                 JOptionPane.showMessageDialog(null, "Venda efetuada com sucesso!!!");
                 //fecha esta janela
                 this.dispose();
                 //chama este formulario novamente
                 ctrVenda.mostraFormulario();
-                
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
@@ -400,11 +405,11 @@ public class CadastraVenda extends javax.swing.JFrame {
                 //pois este imovel será gravado no arquivo de vendas
                 objImovel = imv;
                 //pega o index do imovel selecionado
-                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);     
-                System.out.println("Index remover: "+ indexRemove);
+                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);
+                System.out.println("Index remover: " + indexRemove);
             }//fecha if 01
         }//fecha for 01
-        
+
     }//GEN-LAST:event_cbImovelDisponivelActionPerformed
 
     private void tfValorNegociadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorNegociadoActionPerformed
