@@ -39,7 +39,7 @@ public class ControleImovel {//abre classe ControleImovel
 
     }//fecha construtor 01
 
-    public void cadastraImovel(int codigo, String tipo, String descricao, String nomeProprietario, double precoSolicitado, String data) {
+    public void cadastraImovel(int codigo, String tipo, String descricao, String nomeProprietario, double precoSolicitado, Calendar data) {
 
         listaImoveis.add(new Imovel(codigo, tipo, descricao, nomeProprietario, precoSolicitado, data));
 
@@ -63,7 +63,8 @@ public class ControleImovel {//abre classe ControleImovel
             for (Imovel i : listaImoveis) {//abre for 01
                 //verifica se o tipo do imóvel selecionado no LimitiImovel.listarImoveis existe
                 aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
-                        + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
+                        + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData().get(Calendar.DAY_OF_MONTH) + "/"
+                        + i.getData().get(Calendar.MONTH) + "/" + i.getData().get(Calendar.YEAR);
                 lista.add(aux);//adiciona imovel no ArrayList lita
             }//fecha for 01
         }//fecha if 01 
@@ -74,7 +75,8 @@ public class ControleImovel {//abre classe ControleImovel
                 //verifica se o tipo do imóvel selecionado no LimitiImovel.listarImoveis existe
                 if (pTipo.equals(i.getTipo())) {//abre if 02
                     aux = "Codigo: " + i.getCodigo() + "\nTipo: " + i.getTipo() + "\nDescrição: " + i.getDescricao() + "\nNome Do Proprietário: "
-                            + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData();
+                            + i.getNomeVendedor() + "\nPreço: " + i.getPrecoSolicitado() + "\nData de Cadastro: " + i.getData().get(Calendar.DAY_OF_MONTH) + "/"
+                            + i.getData().get(Calendar.MONTH) + "/" + i.getData().get(Calendar.YEAR);
                     lista.add(aux);//adiciona imovel no ArrayList lita
                 }//fecha if 02
             }//fecha for 02

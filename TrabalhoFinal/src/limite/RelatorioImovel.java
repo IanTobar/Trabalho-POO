@@ -5,6 +5,16 @@
  */
 package limite;
 
+import controle.ControlePrincipal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import modelo.CorretorComissionado;
+import modelo.CorretorContratado;
+import modelo.Imovel;
+import modelo.Venda;
+
 /**
  *
  * @author Ruan
@@ -14,8 +24,40 @@ public class RelatorioImovel extends javax.swing.JFrame {
     /**
      * Creates new form RelatorioImovel
      */
-    public RelatorioImovel() {
+    ControlePrincipal ctrPrincipal;
+
+    public RelatorioImovel(ControlePrincipal ctrPrincipal) {
         initComponents();
+
+        this.ctrPrincipal = ctrPrincipal;
+
+        cbAno.removeAllItems();
+        cbMes.removeAllItems();
+
+        ArrayList<String> anosDisponiveis = new ArrayList<String>();
+        System.out.println(ctrPrincipal.ctrVenda.getListaVendas().size());
+
+        for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
+            int ano = v.getDataVenda().get(Calendar.YEAR);
+            if (!anosDisponiveis.contains(String.valueOf(ano))) {
+                anosDisponiveis.add(String.valueOf(ano));
+            }
+        }
+
+        if (anosDisponiveis.size() != 0) {
+            for (int i = 0; i < anosDisponiveis.size(); i++) {
+                cbAno.addItem(anosDisponiveis.get(i));
+            }
+        } else {
+            cbAno.addItem("--");
+            cbMes.addItem("--");
+            JOptionPane.showMessageDialog(null, "Não há vendas cadastradas no sistema!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        textAreaEncalhados.setText(relacaoImoveisEncalhados());
+
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setVisible(true);
     }
 
     /**
@@ -63,7 +105,19 @@ public class RelatorioImovel extends javax.swing.JFrame {
 
         jLabel5.setText("Ano:");
 
+        cbAno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAnoActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("Mes:");
+
+        cbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,40 +188,322 @@ public class RelatorioImovel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private String relacaoImoveisVendidos() {
+        String output = "";
+
+        //Variaveis para a relação de moveis vendidos
+        ArrayList<String> listaImoveis = new ArrayList<>();
+        String tipoPopular = "";
+        String tipoNaoPopular = "";
+        double maiorValor = 0;
+        double menorValor = 9999999;
+        int quantidadeVendida[] = new int[]{0, 0, 0, 0, 0, 0, 0};
+        int quantidadeTotalVendida = 0;
+
+        for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
+            if (String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR))) && String.valueOf(cbMes.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))) {
+                listaImoveis.add(v.getObjImovel().getCodigo() + " - " + v.getObjImovel().getTipo() + " - " + v.getObjImovel().getNomeVendedor() + "\n");
+
+                //pega o tipo mais popular e o menos popular
+                if (v.getObjImovel().getTipo().equals("Casa")) {
+                    quantidadeVendida[0]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Apartamento")) {
+                    quantidadeVendida[1]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Sala Comercial")) {
+                    quantidadeVendida[2]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Lote")) {
+                    quantidadeVendida[3]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Chácara")) {
+                    quantidadeVendida[4]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Sítio")) {
+                    quantidadeVendida[5]++;
+                }
+
+                if (v.getObjImovel().getTipo().equals("Fazenda")) {
+                    quantidadeVendida[6]++;
+                }
+
+                //Acha o maior e o menor
+                if (v.getValorNegociado() > maiorValor) {
+                    maiorValor = v.getValorNegociado();
+                }
+
+                if (v.getValorNegociado() < menorValor) {
+                    menorValor = v.getValorNegociado();
+                }
+
+                //Sempre aumenta um na quantidade total de vendas!
+                quantidadeTotalVendida++;
+            }
+        }
+
+        int auxMaior = 0;
+        int auxMenor = 9999;
+        for (int i = 0; i < 7; i++) {
+            if (auxMaior < quantidadeVendida[i]) {
+                auxMaior = quantidadeVendida[i];
+            }
+
+            if (auxMenor > quantidadeVendida[i] && quantidadeVendida[i] > 0) {
+                auxMenor = quantidadeVendida[i];
+            }
+        }
+
+        for (int i = 0; i < 7; i++) {
+            if (quantidadeVendida[i] == auxMaior) {
+                if (i == 0) {
+                    tipoPopular = "Casa";
+                }
+                if (i == 1) {
+                    tipoPopular = "Apartamento";
+                }
+                if (i == 2) {
+                    tipoPopular = "Sala Comercial";
+                }
+                if (i == 3) {
+                    tipoPopular = "Lote";
+                }
+                if (i == 4) {
+                    tipoPopular = "Chácara";
+                }
+                if (i == 5) {
+                    tipoPopular = "Sítio";
+                }
+                if (i == 6) {
+                    tipoPopular = "Fazenda";
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RelatorioImovel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RelatorioImovel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RelatorioImovel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RelatorioImovel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RelatorioImovel().setVisible(true);
+            if (quantidadeVendida[i] == auxMenor) {
+                if (i == 0) {
+                    tipoNaoPopular = "Casa";
+                }
+                if (i == 1) {
+                    tipoNaoPopular = "Apartamento";
+                }
+                if (i == 2) {
+                    tipoNaoPopular = "Sala Comercial";
+                }
+                if (i == 3) {
+                    tipoNaoPopular = "Lote";
+                }
+                if (i == 4) {
+                    tipoNaoPopular = "Chácara";
+                }
+                if (i == 5) {
+                    tipoNaoPopular = "Sítio";
+                }
+                if (i == 6) {
+                    tipoNaoPopular = "Fazenda";
+                }
             }
-        });
+        }
+
+        output = "Tipo Mais Popular: " + tipoPopular + "\nTipo Menos Popular: " + tipoNaoPopular
+                + "\nQuantidade total de imoveis vendidos: " + quantidadeTotalVendida + "\nImovel de maior valor vendido: " + maiorValor
+                + "\nImovel de menor valor vendido: " + menorValor + "\nLista de Imoveis Vendidos:\n";
+
+        for (String s : listaImoveis) {
+            output += s;
+        }
+
+        return output;
     }
+
+    private String relacaoImoveisEncalhados() {
+        String output = "";
+
+        //Variaveis para a relação de moveis vendidos
+        ArrayList<String> listaImoveis = new ArrayList<>();
+        Imovel MaisTempo = new Imovel(0, "", "", "", 0, Calendar.getInstance());
+        String tipoComum = "";
+        double maiorValor = 0;
+        double menorValor = 9999999;
+        int quantidadeEncalhada[] = new int[]{0, 0, 0, 0, 0, 0, 0};
+        int quantidadeTotalEncalhada = 0;
+
+        Calendar data = Calendar.getInstance();
+
+        int auxValor = 0;
+        //v = imovel
+        for (Imovel v : ctrPrincipal.ctrImovel.getLista()) {
+            if (checaValor(data, v.getData()) >= 180) {
+
+                //pega o tipo mais popular e o menos popular
+                if (v.getTipo().equals("Casa")) {
+                    quantidadeEncalhada[0]++;
+                }
+
+                if (v.getTipo().equals("Apartamento")) {
+                    quantidadeEncalhada[1]++;
+                }
+
+                if (v.getTipo().equals("Sala Comercial")) {
+                    quantidadeEncalhada[2]++;
+                }
+
+                if (v.getTipo().equals("Lote")) {
+                    quantidadeEncalhada[3]++;
+                }
+
+                if (v.getTipo().equals("Chácara")) {
+                    quantidadeEncalhada[4]++;
+                }
+
+                if (v.getTipo().equals("Sítio")) {
+                    quantidadeEncalhada[5]++;
+                }
+
+                if (v.getTipo().equals("Fazenda")) {
+                    quantidadeEncalhada[6]++;
+                }
+
+                quantidadeTotalEncalhada++;
+
+                //Acha o maior
+                if (v.getPrecoSolicitado() > maiorValor) {
+                    maiorValor = v.getPrecoSolicitado();
+                }
+                if (v.getPrecoSolicitado() < menorValor) {
+                    menorValor = v.getPrecoSolicitado();
+                }
+
+                listaImoveis.add(v.getCodigo() + " - " + v.getTipo() + " - " + v.getNomeVendedor() + "\n");
+
+                if (checaValor(data, v.getData()) > auxValor) {
+                    MaisTempo = v;
+                }
+            }
+        }
+
+        int auxMaior = 0;
+        for (int i = 0; i < 7; i++) {
+            if (auxMaior < quantidadeEncalhada[i]) {
+                auxMaior = quantidadeEncalhada[i];
+            }
+        }
+
+        for (int i = 0; i < 7; i++) {
+            if (quantidadeEncalhada[i] == auxMaior) {
+                if (i == 0) {
+                    tipoComum = "Casa";
+                }
+                if (i == 1) {
+                    tipoComum = "Apartamento";
+                }
+                if (i == 2) {
+                    tipoComum = "Sala Comercial";
+                }
+                if (i == 3) {
+                    tipoComum = "Lote";
+                }
+                if (i == 4) {
+                    tipoComum = "Chácara";
+                }
+                if (i == 5) {
+                    tipoComum = "Sítio";
+                }
+                if (i == 6) {
+                    tipoComum = "Fazenda";
+                }
+            }
+        }
+
+        output = "Imovel a mais tempo encalhado: " + MaisTempo.getCodigo() + " - " + MaisTempo.getTipo() + "\nTipo mais comum encalhado: " + tipoComum + "\nMaior dos encalhados: " + maiorValor
+                + "\nQuantidade total de encalhados: " + quantidadeTotalEncalhada + "\nLista de Imoveis Encalhados:\n";
+
+        for (String s : listaImoveis) {
+            output += s;
+        }
+
+        return output;
+    }
+
+    private boolean checaDuracao(Calendar atual, Calendar alvo) {
+
+        //Primeiro passo transformar tudo em dias onde o ponto inicial é o atual
+        //1 mes tem 30 dias aproximadamente
+        //1 anos tem 365 dias
+        int d1 = 0, d2 = 0;
+        int dia = 0, mes = 0, ano = 0;
+
+        dia = atual.get(Calendar.DAY_OF_MONTH);
+        mes = atual.get(Calendar.MONTH);
+        ano = atual.get(Calendar.YEAR);
+
+        d1 = ano * 365 + mes * 30 + dia;
+
+        dia = alvo.get(Calendar.DAY_OF_MONTH);
+        mes = alvo.get(Calendar.MONTH);
+        ano = alvo.get(Calendar.YEAR);
+
+        d2 = ano * 365 + mes * 30 + dia;
+
+        //Levando em conta que 6 meses tem aproximadamente 180 dias
+        //Se a diferença de d1 e d2 ser maior que 180, então o imovel sera adicionado a lista de encalhados
+        if (Math.abs(d1 - d2) >= 180) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private int checaValor(Calendar atual, Calendar alvo) {
+
+        //Primeiro passo transformar tudo em dias onde o ponto inicial é o atual
+        //1 mes tem 30 dias aproximadamente
+        //1 anos tem 365 dias
+        int d1 = 0, d2 = 0;
+        int dia = 0, mes = 0, ano = 0;
+
+        dia = atual.get(Calendar.DAY_OF_MONTH);
+        mes = atual.get(Calendar.MONTH);
+        ano = atual.get(Calendar.YEAR);
+
+        d1 = ano * 365 + mes * 30 + dia;
+
+        dia = alvo.get(Calendar.DAY_OF_MONTH);
+        mes = alvo.get(Calendar.MONTH);
+        ano = alvo.get(Calendar.YEAR);
+
+        d2 = ano * 365 + mes * 30 + dia;
+
+        //Levando em conta que 6 meses tem aproximadamente 180 dias
+        //Se a diferença de d1 e d2 ser maior que 180, então o imovel sera adicionado a lista de encalhados
+        return Math.abs(d1 - d2);
+
+    }
+
+    private void cbAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAnoActionPerformed
+        cbMes.removeAllItems();
+        ArrayList<String> meses = new ArrayList<String>();
+
+        for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
+            if (String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR)))) {
+                if (!meses.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))) {
+                    meses.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+                }
+            }
+        }
+
+        for (int i = 0; i < meses.size(); i++) {
+            cbMes.addItem(meses.get(i));
+        }
+    }//GEN-LAST:event_cbAnoActionPerformed
+
+    private void cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesActionPerformed
+
+        textAreaVendidos.setText(relacaoImoveisVendidos());
+    }//GEN-LAST:event_cbMesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbAno;

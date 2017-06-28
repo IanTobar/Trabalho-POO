@@ -5,6 +5,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class Imovel implements Serializable {//abre classe Imovel
     
@@ -13,11 +14,11 @@ public class Imovel implements Serializable {//abre classe Imovel
     String descricao;//Descrição do imovel
     String nomeVendedor;//Nome do vendedor que esta vendendo o imovel
     double precoSolicitado;//Preço proposto pelo vendedor
-    String data;//Data de cadastro
+    Calendar data;//Data de cadastro
 
     //construtor
     public Imovel(int codigo, String tipo, String descricao, String nomeVendedor, 
-            double precoSolicitado, String data) {//abre construtor 01
+            double precoSolicitado, Calendar data) {//abre construtor 01
         
         this.codigo = codigo;
         this.tipo = tipo;
@@ -53,7 +54,7 @@ public class Imovel implements Serializable {//abre classe Imovel
         this.nomeVendedor = nomeVendedor;
     }
 
-    public void setData(String data) {
+    public void setData(Calendar data) {
         this.data = data;
     }
     
@@ -77,7 +78,7 @@ public class Imovel implements Serializable {//abre classe Imovel
         return precoSolicitado;
     }
 
-    public String getData() {
+    public Calendar getData() {
         return data;
     }
     

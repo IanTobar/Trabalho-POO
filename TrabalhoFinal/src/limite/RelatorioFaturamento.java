@@ -38,7 +38,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
         cbMes.removeAllItems();
 
         ArrayList<String> anosDisponiveis = new ArrayList<String>();
-        ArrayList<String> mesesDisponiveis = new ArrayList<String>();
         System.out.println(ctrPrincipal.ctrVenda.getListaVendas().size());
 
         for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
