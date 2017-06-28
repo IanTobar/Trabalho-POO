@@ -336,16 +336,18 @@ public class CadastraVenda extends javax.swing.JFrame {
         if (tfNomeComprador.getText().equals("") || tfValorReal.getText().equals("") || tfValorNegociado.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos antes da conclusão do cadastro", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
-            ControlePrincipal ctrPrincipal = new ControlePrincipal();
             try {
+                Calendar data = Calendar.getInstance();
+                data.set(Integer.parseInt(String.valueOf(cbAno.getSelectedItem())),Integer.parseInt(String.valueOf(cbMes.getSelectedItem())),Integer.parseInt(String.valueOf(cbDia.getSelectedItem())));
+                
                 //chama metodo para cadastrar a venda
-                ctrPrincipal.ctrVenda.cadastraVenda(tfNomeComprador.getText(), new Date(),
+                ctrVenda.cadastraVenda(tfNomeComprador.getText(), data,
                         cbCorretorResponsavel.getSelectedItem().toString(),
                         Double.parseDouble(tfValorNegociado.getText()), objImovel
                 );
                 //chama metodo para remover imovel
                 System.out.println("No clicar do botao Index remover: "+ indexRemove);
-                ctrPrincipal.ctrImovel.removeLista(indexRemove);
+                ctrVenda.ctrPrincipal.ctrImovel.removeLista(indexRemove);
                 JOptionPane.showMessageDialog(null, "Venda efetuada com sucesso!!!");
                 //fecha esta janela
                 this.dispose();

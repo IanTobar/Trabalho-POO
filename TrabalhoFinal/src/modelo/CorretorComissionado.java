@@ -52,7 +52,7 @@ public class CorretorComissionado extends Corretor  implements Serializable {//a
     public String toString(){//abre toString
         
         return "Nome: " + super.getaNome() + " CRECI: " + super.getaCreci() + 
-                " Renda: " + this.calculaRenda();//retornar dados
+                " Comissao: " + this.calculaRenda();//retornar dados
         
     }//fecha toString
     

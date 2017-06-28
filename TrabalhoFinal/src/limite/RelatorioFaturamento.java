@@ -6,10 +6,16 @@
 package limite;
 
 import controle.ControlePrincipal;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import modelo.Corretor;
+import modelo.CorretorComissionado;
+import modelo.CorretorContratado;
 import modelo.Venda;
 
 /**
@@ -30,33 +36,36 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         cbAno.removeAllItems();
         cbMes.removeAllItems();
-        cbDia.removeAllItems();
 
         ArrayList<String> anosDisponiveis = new ArrayList<String>();
         ArrayList<String> mesesDisponiveis = new ArrayList<String>();
-        ArrayList<String> diasDisponiveis = new ArrayList<String>();
+        System.out.println(ctrPrincipal.ctrVenda.getListaVendas().size());
 
         for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
             int ano = v.getDataVenda().get(Calendar.YEAR);
-
+            int mes = v.getDataVenda().get(Calendar.MONTH);
             if (!anosDisponiveis.contains(String.valueOf(ano))) {
                 anosDisponiveis.add(String.valueOf(ano));
             }
+
+            if (!mesesDisponiveis.contains(String.valueOf(mes))) {
+                mesesDisponiveis.add(String.valueOf(mes));
+            }
         }
 
-        if (anosDisponiveis.size() != 0 && mesesDisponiveis.size() != 0 && diasDisponiveis.size() != 0) {
+        if (anosDisponiveis.size() != 0) {
             for (int i = 0; i < anosDisponiveis.size(); i++) {
                 cbAno.addItem(anosDisponiveis.get(i));
+            }
+
+            for (int i = 0; i < mesesDisponiveis.size(); i++) {
+                cbMes.addItem(mesesDisponiveis.get(i));
             }
         } else {
             cbAno.addItem("--");
             cbMes.addItem("--");
-            cbDia.addItem("--");
             JOptionPane.showMessageDialog(null, "Não há vendas cadastradas no sistema!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        cbMes.addItem("--");
-        cbDia.addItem("--");
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
@@ -78,8 +87,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
         cbAno = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cbMes = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        cbDia = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
@@ -104,8 +111,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Dia:");
-
         textArea.setColumns(20);
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
@@ -119,7 +124,7 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,11 +133,7 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 207, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,9 +146,7 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,35 +171,51 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
     private void cbAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAnoActionPerformed
         cbMes.removeAllItems();
         ArrayList<String> meses = new ArrayList<String>();
-        
-        for(Venda v : ctrPrincipal.ctrVenda.getListaVendas()){
-            if(!meses.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
-                meses.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+
+        for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
+            if (String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR)))) {
+                if (!meses.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))) {
+                    meses.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+                }
             }
         }
-        
-        for(int i = 0; i < meses.size();i++){
+
+        for (int i = 0; i < meses.size(); i++) {
             cbMes.addItem(meses.get(i));
         }
-        
-        cbDia.removeAllItems();
-        cbDia.addItem("--");
     }//GEN-LAST:event_cbAnoActionPerformed
 
     private void cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesActionPerformed
-        cbDia.removeAllItems();
+        String output = "";
         
-        ArrayList<String> dias = new ArrayList<String>();
+        double fatTotal = 0;
+        double gastos = 0;
+        double lucro = 0;
         
         for(Venda v : ctrPrincipal.ctrVenda.getListaVendas()){
-            if(!dias.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
-                dias.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+            if(String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR))) && String.valueOf(cbMes.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
+                fatTotal += v.getValorNegociado()*0.05;
+                for(Corretor c : ctrPrincipal.ctrCorretor.getLista()){
+                    if(c.getaNome().equals(v.getCorretorResponsavel())){
+                        if(c instanceof CorretorComissionado){
+                            CorretorComissionado aux;
+                            aux = (CorretorComissionado) c;
+                            
+                            gastos += v.getValorNegociado()*(aux.getaComissao()/100);
+                        }else{
+                            CorretorContratado aux;
+                            aux = (CorretorContratado) c;
+                            
+                            gastos += aux.getaSalarioFixo() + v.getValorNegociado()*0.01;
+                        }
+                    }
+                }
             }
         }
+        lucro = fatTotal - gastos;
         
-        for(int i = 0; i < dias.size();i++){
-            cbMes.addItem(dias.get(i));
-        }
+        textArea.setText("Faturamento Total da Imobiliaria: "+fatTotal
+        +"\nLucro da Imobiliaria: "+lucro);
     }//GEN-LAST:event_cbMesActionPerformed
 
     /**
@@ -209,12 +224,10 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbAno;
-    private javax.swing.JComboBox<String> cbDia;
     private javax.swing.JComboBox<String> cbMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
