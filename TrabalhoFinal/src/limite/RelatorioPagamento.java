@@ -86,20 +86,6 @@ public class RelatorioPagamento extends javax.swing.JFrame {
 
         lbResultado.setText("Resultado:");
 
-        btSubmit.setText("OK");
-        btSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSubmitActionPerformed(evt);
-            }
-        });
-
-        btCancelar.setText("Cancelar");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -109,10 +95,6 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbSelecionaCorretor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btSubmit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btCancelar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbCorretor)
@@ -128,9 +110,6 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btSubmit});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -148,37 +127,62 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                 .addComponent(lbCorretor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbSelecionaCorretor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbResultado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btCancelar)
-                    .addComponent(btSubmit))
-                .addGap(57, 57, 57))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        btSubmit.setText("OK");
+        btSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSubmitActionPerformed(evt);
+            }
+        });
+
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSubmit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCancelar)
+                .addGap(18, 18, 18))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btSubmit});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btCancelar)
+                    .addComponent(btSubmit))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubmitActionPerformed
-        //declaração de variaveis
+
         double vendas = 0.0;
         double salario = 0.0;
+        double comissao = 0.0;
+        double valorPagar = 0.0;
         String output = "";
         String tipo = "";
 
@@ -219,19 +223,51 @@ public class RelatorioPagamento extends javax.swing.JFrame {
         if (tipo.equals("comissionado")) {//abre if 04
             vendas = vendas * 0.03;
             output += "Valor a ser pago para o corretor comissionado: ";
-            output += String.valueOf(vendas)+ "\n";
+            output += String.valueOf(vendas) + "\n";
             output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
-            
+
         }//fecha if 04
         else if (tipo.equals("")) {//abre if 05
-            output = "Pesquisa não retornou valores!\nVerifique a data digitada!!!";
-            JOptionPane.showMessageDialog(null, "Não encontrado valores para a data digitada!!!");
+            //se não tiver a venda do nome selecionado no comboBox
+            //pega somente o salario, se for contratado            
+            //traz os outros campos zerados
+
+            for (Corretor c : ctrPrincipal.ctrCorretor.getListaCorretor()) {
+                if (c instanceof CorretorContratado) {
+                    CorretorContratado con = (CorretorContratado) c;
+                    if (con.getaNome().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem()))) {
+                        salario = con.getaSalarioFixo();
+
+                        comissao = vendas * 0.01;
+                        valorPagar = comissao + salario;
+                        output += "Valor a ser pago para o corretor contratado:";
+                        output += "\nComissão: " + String.valueOf(comissao);
+                        output += "\nSalário: " + salario;
+                        output += "\nValor total a pagar:" + String.valueOf(valorPagar) + "\n";
+                        output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+
+                    }
+                } else {
+                    CorretorComissionado comi = (CorretorComissionado) c;
+                    if (comi.getaNome().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem()))) {
+                        vendas = vendas * 0.03;
+                        output += "Valor a ser pago para o corretor comissionado: ";
+                        output += String.valueOf(vendas) + "\n";
+                        output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+                    }
+
+                }
+
+            }
+
         }//fecha if 05
         else {
-            vendas = vendas * 0.01;
-            vendas = vendas + salario;
-            output += "Valor a ser pago para o corretor contratado: ";
-            output += String.valueOf(vendas) +"\n";
+            comissao = vendas * 0.01;
+            valorPagar = comissao + salario;
+            output += "Valor a ser pago para o corretor contratado:";
+            output += "\nComissão: " + String.valueOf(comissao);
+            output += "\nSalário: " + salario;
+            output += "\nValor total a pagar:" + String.valueOf(valorPagar) + "\n";
             output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
         }
 
@@ -251,9 +287,9 @@ public class RelatorioPagamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void cbSelecionaCorretorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelecionaCorretorActionPerformed
-        
+
         taResultado.setText("");
-        
+
     }//GEN-LAST:event_cbSelecionaCorretorActionPerformed
 
 

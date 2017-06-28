@@ -1,33 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//BRUNO GUILHERME LUNARDI
+//RUAN MICHEL ADABO
+//IAN MARCELO TOBAR
 package limite;
 
 import controle.ControlePrincipal;
+import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import modelo.Corretor;
+import modelo.CorretorComissionado;
+import modelo.CorretorContratado;
+import modelo.Venda;
 
-/**
- *
- * @author Bruno
- */
 public class RelatorioCorretores extends javax.swing.JFrame {
 
     //controlador
-    ControlePrincipal ctrPrincipal;    
-    
+    ControlePrincipal ctrPrincipal;
+
     /**
      * Creates new form RelatorioCorretores
      */
     public RelatorioCorretores(ControlePrincipal ctrPrincipal) {
-        
+        //inicia controlador
         this.ctrPrincipal = ctrPrincipal;
         //inicia os componentes        
         initComponents();
-        
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setVisible(true);        
+        //configura esta janela
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(true);
     }
 
     /**
@@ -50,7 +50,7 @@ public class RelatorioCorretores extends javax.swing.JFrame {
         lbCorretorMes = new javax.swing.JLabel();
         lbResultNomeCorretorMes = new javax.swing.JLabel();
         btCancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btOk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,8 +120,18 @@ public class RelatorioCorretores extends javax.swing.JFrame {
         );
 
         btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("OK");
+        btOk.setText("OK");
+        btOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btOkActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,13 +140,13 @@ public class RelatorioCorretores extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btOk)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCancelar)
                 .addGap(18, 18, 18))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, jButton1});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btOk});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,17 +155,91 @@ public class RelatorioCorretores extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCancelar)
-                    .addComponent(jButton1))
+                    .addComponent(btOk))
                 .addGap(0, 27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOkActionPerformed
+        String output = "";
+        String nomeCorretorMes = "";
+        //verifica se foi digitado ano e mês
+        if (tfAnoPesquisa.equals("") || tfMesPesquisa.equals("")) {//abre if 01
+            JOptionPane.showMessageDialog(null, "Ano e Mês são obrigatórios!!!");
+        }//fecha if 01
+        else {//abre else do if 01
+            //pega mes e ano digitado
+            int pMes = Integer.parseInt(tfMesPesquisa.getText());
+            int pAno = Integer.parseInt(tfAnoPesquisa.getText());
+            double vendas;
+            double salario = 0.0;
+            double maiorVenda = 0.0;
+            
+            
+            //for para percorrer a lista de corretores
+            //pega todos os corretores cadastrados no sistema
+            for (Corretor c : ctrPrincipal.ctrCorretor.getListaCorretor()) {//abre for 01
+                //inicializa vendas
+                vendas = 0.0;//pega o valor total da venda de cada corretor
+
+                output += "Nome Corretor: " + c.getaNome() + "\n";
+
+                //for para percorrer a lista de vendas
+                //atraves do nome do corretor da variavel c acha as vendas
+                for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {//abre for 02
+                    //if para pegar as vendas da data digitada
+                    if ((v.getDataVenda().get(Calendar.MONTH) == pMes)
+                            && (v.getDataVenda().get(Calendar.YEAR) == pAno)
+                            && (v.getCorretorResponsavel().getaNome().equals(c.getaNome()))) {//abre if 02     
+
+                            vendas = vendas + v.getValorNegociado();
+
+                    }//fecha if 02
+                }//fecha for 02
+
+                output += "Faturamento: " + vendas + "\n";
+                
+                //verifica quem vendeu mais
+                if(vendas > maiorVenda){
+                    maiorVenda = vendas;
+                    nomeCorretorMes = c.getaNome();
+                }
+
+                //verifica o tipo de corretor
+                if (c instanceof CorretorComissionado) {//abre if 
+                    vendas = vendas * 0.03;
+                    output += "Valor pago ao Corretor Comissionado: " + String.valueOf(vendas) + "\n";
+                }//fecha if
+                else {
+                    //variavel auxiliar para pegar o salario do corretor contratado
+                    CorretorContratado auxContratado = (CorretorContratado)c;//converte para contratado
+                    vendas = vendas * 0.01;
+                    vendas = vendas + auxContratado.getaSalarioFixo();
+                    output += "Valor pago ao Corretor Comissionado: " + String.valueOf(vendas) + "\n";
+                }
+
+                output += "\n-----------------------------------------------------------------------\n";
+                
+            }//fecha for 01
+
+        }//fecha else do if 01
+        lbResultNomeCorretorMes.setText(nomeCorretorMes);
+        taResultadoPesquisa.setText(output);
+
+    }//GEN-LAST:event_btOkActionPerformed
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        //fecha tela
+        this.dispose();
+
+    }//GEN-LAST:event_btCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btOk;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbAno;
