@@ -187,6 +187,7 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                 ){//abre for 02
                     vendas += v.getValorNegociado();
                     
+                    
                 }//fecha for 02
                 
             }//fecha for 01
