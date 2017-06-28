@@ -10,12 +10,12 @@ import java.util.*;
 public class CorretorContratado extends Corretor  implements Serializable {//abre classeCorretorContratado
 
     private double aSalarioFixo;
-    private Date aDataAdmissao;
+    private Calendar aDataAdmissao;
     
     //falta adicionar a venda!!!
     
     //construtor
-    public CorretorContratado( String pNome, int pCreci, double pSalario, Date pDataAdmissao )throws Exception{//abre construtor 01
+    public CorretorContratado( String pNome, int pCreci, double pSalario, Calendar pDataAdmissao )throws Exception{//abre construtor 01
 
         
         //chama construtor da classe abstrata Corretor.java
@@ -44,11 +44,11 @@ public class CorretorContratado extends Corretor  implements Serializable {//abr
         
     }//fecha setaSalarioFixo
 
-    public Date getaDataAdmissao() {
+    public Calendar getaDataAdmissao() {
         return aDataAdmissao;
     }
 
-    public void setaDataAdmissao(Date aDataAdmissao) {
+    public void setaDataAdmissao(Calendar aDataAdmissao) {
         this.aDataAdmissao = aDataAdmissao;
     }
 

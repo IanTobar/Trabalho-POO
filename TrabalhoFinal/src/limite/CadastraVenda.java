@@ -18,28 +18,37 @@ import javax.swing.JOptionPane;
  */
 public class CadastraVenda extends javax.swing.JFrame {
 
+    //controlador
+    ControleVenda ctrVenda;
+    //recebera o objeto referente ao imovel que será cadastrado na venda
+    Imovel objImovel;
+    //variavel que recebera o index do elemento que será removido do ArrayList de imoveis
+    int indexRemove = 0;
+
     /**
      * Creates new form CadastraVenda
      */
-    public CadastraVenda(ControlePrincipal ctrPrincipal) {
+    public CadastraVenda(ControleVenda ctrVenda) {
+
+        this.ctrVenda = ctrVenda;
 
         initComponents();
 
-        String[] nomes = new String[ctrPrincipal.ctrCorretor.getLista().size()];
+        String[] nomes = new String[ctrVenda.ctrPrincipal.ctrCorretor.getLista().size()];
 
         System.out.println("teste1");
 
         int i = 0;
-        for (Corretor c : ctrPrincipal.ctrCorretor.getLista()) {
+        for (Corretor c : ctrVenda.ctrPrincipal.ctrCorretor.getLista()) {
             nomes[i] = c.getaNome();
             System.out.println(c.getaNome());
             i++;
         }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(nomes));
+        cbCorretorResponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(nomes));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+        cbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+        cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 
         int ano = 2010;
         String[] anos = new String[11];
@@ -47,9 +56,44 @@ public class CadastraVenda extends javax.swing.JFrame {
             anos[j] = String.valueOf(ano);
             ano++;
         }
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(anos));
+        cbAno.setModel(new javax.swing.DefaultComboBoxModel<>(anos));
 
-        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        /////////////////
+        //Evitar repetições no JComboBox
+        ////////////////
+        //Array para pegar os tipos de imóveis já cadastrados
+        ArrayList<String> auxString = new ArrayList<String>();
+        //inicializa ComboBox
+        for (Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()) {//abre for 01   
+            //se não existir no Array auxiliar o tipo cadastrado
+            if (!auxString.contains(imv.getTipo())) {//abre if 01
+                auxString.add(imv.getTipo());//adiciona o tipo no Array auxiliar
+                cbTipoVender.addItem(imv.getTipo());//adiciona item no comboBox
+            }//fecha if 01
+        }//fecha for 01
+
+        //zera combobox
+        cbImovelDisponivel.removeAllItems();
+
+        //Array para pegar os tipos de imóveis já cadastrados
+        ArrayList<Imovel> auxImovel = new ArrayList<Imovel>();
+
+        //for para pegar os codigos de imoveis disponiveis para venda
+        //onde não pegará os repetidos, graças ao if
+        for (Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()) {//abre for 01        
+            if (String.valueOf(cbTipoVender.getSelectedItem()).equals(imv.getTipo())) {
+                auxImovel.add(imv);//adiciona imovel no Array auxiliar
+                cbImovelDisponivel.addItem(imv.getCodigo());
+                //atribui objeto imovel para a variavel objImovel, será armazenado
+                //no arquivo de vendas
+                objImovel = imv;
+                //pega o index do imovel selecionado
+                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);
+                System.out.println("Index remover: "+ indexRemove);
+            }
+        }//fecha for 01
+
+//        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -64,21 +108,27 @@ public class CadastraVenda extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        lbNomeComprador = new javax.swing.JLabel();
+        tfNomeComprador = new javax.swing.JTextField();
+        lbNomeCorretor = new javax.swing.JLabel();
+        cbCorretorResponsavel = new javax.swing.JComboBox<String>();
+        tfValorReal = new javax.swing.JTextField();
+        lbValorReal = new javax.swing.JLabel();
+        lbData = new javax.swing.JLabel();
+        lbDia = new javax.swing.JLabel();
+        lbMes = new javax.swing.JLabel();
+        lbAno = new javax.swing.JLabel();
+        cbDia = new javax.swing.JComboBox<String>();
+        cbAno = new javax.swing.JComboBox<String>();
+        cbMes = new javax.swing.JComboBox<String>();
+        btCadastrar = new javax.swing.JButton();
+        btCancelar = new javax.swing.JButton();
+        lbTipoImovelVender = new javax.swing.JLabel();
+        cbTipoVender = new javax.swing.JComboBox();
+        lbImovelDisponivel = new javax.swing.JLabel();
+        cbImovelDisponivel = new javax.swing.JComboBox();
+        lbValorNegociado = new javax.swing.JLabel();
+        tfValorNegociado = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,70 +141,87 @@ public class CadastraVenda extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("frCadastraVenda"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(500, 291));
-        setSize(new java.awt.Dimension(500, 291));
 
         jPanel2.setName(""); // NOI18N
 
-        jLabel1.setText("Nome do Comprador:");
+        lbNomeComprador.setText("Nome do Comprador:");
 
-        jTextField1.setName("tfNomeComprador"); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tfNomeComprador.setName("tfNomeComprador"); // NOI18N
+        tfNomeComprador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tfNomeCompradorActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Nome do Corretor Responsável:");
+        lbNomeCorretor.setText("Nome do Corretor Responsável:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbCorretorResponsavel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbCorretorResponsavelActionPerformed(evt);
             }
         });
 
-        jTextField2.setName("tfValorReal"); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tfValorReal.setEditable(false);
+        tfValorReal.setName("tfValorReal"); // NOI18N
+        tfValorReal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tfValorRealActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Valor Real:");
+        lbValorReal.setText("Valor Real:");
 
-        jLabel4.setText("Data:");
+        lbData.setText("Data:");
 
-        jLabel5.setText("Dia:");
+        lbDia.setText("Dia:");
 
-        jLabel6.setText("Mes:");
+        lbMes.setText("Mes:");
 
-        jLabel7.setText("Ano:");
+        lbAno.setText("Ano:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        cbDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                cbDiaActionPerformed(evt);
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btCadastrar.setText("Cadastrar");
+        btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btCadastrarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btCancelarActionPerformed(evt);
+            }
+        });
+
+        lbTipoImovelVender.setText("Tipo de imóvel a vender:");
+
+        cbTipoVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoVenderActionPerformed(evt);
+            }
+        });
+
+        lbImovelDisponivel.setText("Imóveis disponiveis:");
+
+        cbImovelDisponivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbImovelDisponivelActionPerformed(evt);
+            }
+        });
+
+        lbValorNegociado.setText("Valor negociado:");
+
+        tfValorNegociado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfValorNegociadoActionPerformed(evt);
             }
         });
 
@@ -165,64 +232,82 @@ public class CadastraVenda extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbNomeComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfNomeComprador)
+                    .addComponent(lbNomeCorretor, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                    .addComponent(lbValorReal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfValorReal)
+                    .addComponent(cbTipoVender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbCorretorResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbImovelDisponivel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbTipoImovelVender)
+                            .addComponent(lbImovelDisponivel)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(lbDia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)
+                                .addComponent(lbMes)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)
+                                .addComponent(lbAno)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btCadastrar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbValorNegociado))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tfValorNegociado))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbTipoImovelVender)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbTipoVender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(lbImovelDisponivel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbImovelDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(lbNomeComprador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNomeComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(3, 3, 3)
+                .addComponent(lbNomeCorretor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbCorretorResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbValorReal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfValorReal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbValorNegociado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfValorNegociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(lbData)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lbDia)
+                    .addComponent(lbMes)
+                    .addComponent(lbAno)
+                    .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(btCancelar)
+                    .addComponent(btCadastrar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,59 +320,121 @@ public class CadastraVenda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGap(0, 36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbCorretorResponsavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCorretorResponsavelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbCorretorResponsavelActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tfValorRealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorRealActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tfValorRealActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jTextField1.getText().equals("") || jTextField2.getText().equals("")) {
+    private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
+        if (tfNomeComprador.getText().equals("") || tfValorReal.getText().equals("") || tfValorNegociado.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos antes da conclusão do cadastro", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
             ControlePrincipal ctrPrincipal = new ControlePrincipal();
-            ctrPrincipal.ctrVenda.cadastraVenda(Double.parseDouble(jTextField2.getText()), jTextField1.getText(), new Date(), jComboBox1.getSelectedItem().toString());
+            try {
+                //chama metodo para cadastrar a venda
+                ctrPrincipal.ctrVenda.cadastraVenda(tfNomeComprador.getText(), new Date(),
+                        cbCorretorResponsavel.getSelectedItem().toString(),
+                        Double.parseDouble(tfValorNegociado.getText()), objImovel
+                );
+                //chama metodo para remover imovel
+                System.out.println("No clicar do botao Index remover: "+ indexRemove);
+                ctrPrincipal.ctrImovel.removeLista(indexRemove);
+                JOptionPane.showMessageDialog(null, "Venda efetuada com sucesso!!!");
+                //fecha esta janela
+                this.dispose();
+                //chama este formulario novamente
+                ctrVenda.mostraFormulario();
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btCadastrarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btCancelarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tfNomeCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeCompradorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tfNomeCompradorActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void cbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_cbDiaActionPerformed
+
+    private void cbTipoVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoVenderActionPerformed
+        //zera comboBox
+        cbImovelDisponivel.removeAllItems();
+        //for para pegar os codigos de imoveis disponiveis para venda
+        for (Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()) {//abre for 01
+            //verifica se o item selecionado no combobox cbTipoVender é igual o tipo contido no vetor
+            //se for igual, adiciona os códigos do tipo selecionado no combobox
+            if (String.valueOf(cbTipoVender.getSelectedItem()).equals(imv.getTipo())) {//abre if 01
+                //adiciona o códgio no combobox
+                cbImovelDisponivel.addItem(imv.getCodigo());
+            }//fecha if 01
+
+        }//fecha for 01          
+
+    }//GEN-LAST:event_cbTipoVenderActionPerformed
+
+    private void cbImovelDisponivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImovelDisponivelActionPerformed
+
+        //for para pegar o valor real do item selecionado
+        for (Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()) {//abre for 01
+            //verifica se o codigo da lista de imoveis é igual o codigo selecionado no combobox cbImovelDisponivel
+            if (String.valueOf(imv.getCodigo()).equals(String.valueOf(cbImovelDisponivel.getSelectedItem()))) {//abre if 01
+                //seta o JTextField tfValorReal com o valor do imovel
+                tfValorReal.setText(String.valueOf(imv.getPrecoSolicitado()));
+                //pega o imovel selecionado e passa para a variavel objImovel
+                //pois este imovel será gravado no arquivo de vendas
+                objImovel = imv;
+                //pega o index do imovel selecionado
+                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);     
+                System.out.println("Index remover: "+ indexRemove);
+            }//fecha if 01
+        }//fecha for 01
+        
+    }//GEN-LAST:event_cbImovelDisponivelActionPerformed
+
+    private void tfValorNegociadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorNegociadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfValorNegociadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton btCadastrar;
+    private javax.swing.JButton btCancelar;
+    private javax.swing.JComboBox<String> cbAno;
+    private javax.swing.JComboBox<String> cbCorretorResponsavel;
+    private javax.swing.JComboBox<String> cbDia;
+    private javax.swing.JComboBox cbImovelDisponivel;
+    private javax.swing.JComboBox<String> cbMes;
+    private javax.swing.JComboBox cbTipoVender;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lbAno;
+    private javax.swing.JLabel lbData;
+    private javax.swing.JLabel lbDia;
+    private javax.swing.JLabel lbImovelDisponivel;
+    private javax.swing.JLabel lbMes;
+    private javax.swing.JLabel lbNomeComprador;
+    private javax.swing.JLabel lbNomeCorretor;
+    private javax.swing.JLabel lbTipoImovelVender;
+    private javax.swing.JLabel lbValorNegociado;
+    private javax.swing.JLabel lbValorReal;
+    private javax.swing.JTextField tfNomeComprador;
+    private javax.swing.JTextField tfValorNegociado;
+    private javax.swing.JTextField tfValorReal;
     // End of variables declaration//GEN-END:variables
 }

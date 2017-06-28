@@ -5,23 +5,29 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  * @author Ruan
  */
-public class Venda {
+public class Venda implements Serializable{
     double valorReal;//Valor real da venda
+    double valorNegociado;//Valor negociado da venda
     String nomeComprador;//Nome do comprador do imovel
     Date dataVenda;//Data da venda
     String corretorResponsavel;
+    Imovel objImovel;
 
-    public Venda(double valorReal, String nomeComprador, Date dataVenda, String corretorResponsavel) {
+    public Venda(String nomeComprador, Date dataVenda, String corretorResponsavel, double valorNegociado, Imovel objImovel) {
         this.valorReal = valorReal;
         this.nomeComprador = nomeComprador;
         this.dataVenda = dataVenda;
         this.corretorResponsavel = corretorResponsavel;
+        this.valorNegociado = valorNegociado;
+        this.objImovel = objImovel;
+        
     }
     
     public double getValorReal() {
@@ -46,6 +52,30 @@ public class Venda {
 
     public void setDataVenda(Date dataVenda) {
         this.dataVenda = dataVenda;
+    }
+
+    public double getValorNegociado() {
+        return valorNegociado;
+    }
+
+    public void setValorNegociado(double valorNegociado) {
+        this.valorNegociado = valorNegociado;
+    }
+
+    public String getCorretorResponsavel() {
+        return corretorResponsavel;
+    }
+
+    public void setCorretorResponsavel(String corretorResponsavel) {
+        this.corretorResponsavel = corretorResponsavel;
+    }
+
+    public Imovel getObjImovel() {
+        return objImovel;
+    }
+
+    public void setObjImovel(Imovel objImovel) {
+        this.objImovel = objImovel;
     }
     
 }

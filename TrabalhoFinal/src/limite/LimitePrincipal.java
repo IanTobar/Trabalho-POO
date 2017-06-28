@@ -145,6 +145,12 @@ public class LimitePrincipal extends JFrame implements ActionListener {
             
         }
 
+        if (ae.getSource().equals(miConsulVenda)) {
+
+            ctrPrincipal.ctrVenda.lmtVenda.listaVendas();
+            
+        }        
+           
     }
 
 }
