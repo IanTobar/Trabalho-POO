@@ -11,7 +11,6 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Venda;
-import oracle.jrockit.jfr.JFR;
 
 /**
  *
@@ -39,17 +38,9 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
             int ano = v.getDataVenda().get(Calendar.YEAR);
-            int mes = v.getDataVenda().get(Calendar.MONTH);
-            int dia = v.getDataVenda().get(Calendar.DAY_OF_MONTH);
-            
+
             if (!anosDisponiveis.contains(String.valueOf(ano))) {
                 anosDisponiveis.add(String.valueOf(ano));
-            }
-            if (!mesesDisponiveis.contains(String.valueOf(mes))) {
-                mesesDisponiveis.add(String.valueOf(mes));
-            }
-            if (!diasDisponiveis.contains(String.valueOf(dia))) {
-                diasDisponiveis.add(String.valueOf(dia));
             }
         }
 
@@ -57,18 +48,15 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
             for (int i = 0; i < anosDisponiveis.size(); i++) {
                 cbAno.addItem(anosDisponiveis.get(i));
             }
-            for (int i = 0; i < mesesDisponiveis.size(); i++) {
-                cbMes.addItem(mesesDisponiveis.get(i));
-            }
-            for (int i = 0; i < diasDisponiveis.size(); i++) {
-                cbDia.addItem(diasDisponiveis.get(i));
-            }
-        }else{
+        } else {
             cbAno.addItem("--");
             cbMes.addItem("--");
             cbDia.addItem("--");
-            JOptionPane.showMessageDialog(null, "Não há vendas cadastradas no sistema!","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não há vendas cadastradas no sistema!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        cbMes.addItem("--");
+        cbDia.addItem("--");
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
@@ -102,7 +90,19 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         jLabel2.setText("Ano:");
 
+        cbAno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAnoActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Mes:");
+
+        cbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMesActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Dia:");
 
@@ -168,6 +168,40 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAnoActionPerformed
+        cbMes.removeAllItems();
+        ArrayList<String> meses = new ArrayList<String>();
+        
+        for(Venda v : ctrPrincipal.ctrVenda.getListaVendas()){
+            if(!meses.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
+                meses.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+            }
+        }
+        
+        for(int i = 0; i < meses.size();i++){
+            cbMes.addItem(meses.get(i));
+        }
+        
+        cbDia.removeAllItems();
+        cbDia.addItem("--");
+    }//GEN-LAST:event_cbAnoActionPerformed
+
+    private void cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesActionPerformed
+        cbDia.removeAllItems();
+        
+        ArrayList<String> dias = new ArrayList<String>();
+        
+        for(Venda v : ctrPrincipal.ctrVenda.getListaVendas()){
+            if(!dias.contains(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
+                dias.add(String.valueOf(v.getDataVenda().get(Calendar.MONTH)));
+            }
+        }
+        
+        for(int i = 0; i < dias.size();i++){
+            cbMes.addItem(dias.get(i));
+        }
+    }//GEN-LAST:event_cbMesActionPerformed
 
     /**
      * @param args the command line arguments
