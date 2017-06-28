@@ -47,10 +47,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
             if (!anosDisponiveis.contains(String.valueOf(ano))) {
                 anosDisponiveis.add(String.valueOf(ano));
             }
-
-            if (!mesesDisponiveis.contains(String.valueOf(mes))) {
-                mesesDisponiveis.add(String.valueOf(mes));
-            }
         }
 
         if (anosDisponiveis.size() != 0) {
