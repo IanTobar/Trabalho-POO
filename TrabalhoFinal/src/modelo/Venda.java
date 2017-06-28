@@ -7,26 +7,20 @@
  * and open the template in the editor.
 
  */
-
 package modelo;
-
-
 
 import java.io.Serializable;
 
 import java.util.*;
 
-
-
 /**
-
  *
-
+ *
+ *
  * @author Ruan
-
+ *
  */
-
-public class Venda implements Serializable{
+public class Venda implements Serializable {
 
     double valorReal;//Valor real da venda
 
@@ -36,13 +30,11 @@ public class Venda implements Serializable{
 
     Calendar dataVenda;//Data da venda
 
-    String corretorResponsavel;
+    Corretor corretorResponsavel;
 
     Imovel objImovel;
 
-
-
-    public Venda(String nomeComprador, Calendar dataVenda, String corretorResponsavel, double valorNegociado, Imovel objImovel) {
+    public Venda(String nomeComprador, Calendar dataVenda, Corretor corretorResponsavel, double valorNegociado, Imovel objImovel) {
 
         this.valorReal = valorReal;
 
@@ -56,11 +48,7 @@ public class Venda implements Serializable{
 
         this.objImovel = objImovel;
 
-        
-
     }
-
-    
 
     public double getValorReal() {
 
@@ -68,15 +56,11 @@ public class Venda implements Serializable{
 
     }
 
-
-
     public void setValorReal(double valorReal) {
 
         this.valorReal = valorReal;
 
     }
-
-
 
     public String getNomeComprador() {
 
@@ -84,15 +68,11 @@ public class Venda implements Serializable{
 
     }
 
-
-
     public void setNomeComprador(String nomeComprador) {
 
         this.nomeComprador = nomeComprador;
 
     }
-
-
 
     public Calendar getDataVenda() {
 
@@ -100,15 +80,11 @@ public class Venda implements Serializable{
 
     }
 
-
-
     public void setDataVenda(Calendar dataVenda) {
 
         this.dataVenda = dataVenda;
 
     }
-
-
 
     public double getValorNegociado() {
 
@@ -116,31 +92,19 @@ public class Venda implements Serializable{
 
     }
 
-
-
     public void setValorNegociado(double valorNegociado) {
 
         this.valorNegociado = valorNegociado;
 
     }
 
-
-
-    public String getCorretorResponsavel() {
-
+    public Corretor getCorretorResponsavel() {
         return corretorResponsavel;
-
     }
 
-
-
-    public void setCorretorResponsavel(String corretorResponsavel) {
-
+    public void setCorretorResponsavel(Corretor corretorResponsavel) {
         this.corretorResponsavel = corretorResponsavel;
-
     }
-
-
 
     public Imovel getObjImovel() {
 
@@ -148,19 +112,10 @@ public class Venda implements Serializable{
 
     }
 
-
-
     public void setObjImovel(Imovel objImovel) {
 
         this.objImovel = objImovel;
 
     }
 
-    
-
-    
-
-    
-
 }
-

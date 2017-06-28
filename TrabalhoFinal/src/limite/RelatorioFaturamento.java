@@ -187,35 +187,29 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
     private void cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesActionPerformed
         String output = "";
-        
+
         double fatTotal = 0;
         double gastos = 0;
         double lucro = 0;
-        
-        for(Venda v : ctrPrincipal.ctrVenda.getListaVendas()){
-            if(String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR))) && String.valueOf(cbMes.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))){
-                fatTotal += v.getValorNegociado()*0.05;
-                for(Corretor c : ctrPrincipal.ctrCorretor.getLista()){
-                    if(c.getaNome().equals(v.getCorretorResponsavel())){
-                        if(c instanceof CorretorComissionado){
-                            CorretorComissionado aux;
-                            aux = (CorretorComissionado) c;
-                            
-                            gastos += v.getValorNegociado()*(aux.getaComissao()/100);
-                        }else{
-                            CorretorContratado aux;
-                            aux = (CorretorContratado) c;
-                            
-                            gastos += aux.getaSalarioFixo() + v.getValorNegociado()*0.01;
-                        }
-                    }
+
+        for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
+            if (String.valueOf(cbAno.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.YEAR))) && String.valueOf(cbMes.getSelectedItem()).equals(String.valueOf(v.getDataVenda().get(Calendar.MONTH)))) {
+                fatTotal += v.getValorNegociado() * 0.05;
+                if (v.getCorretorResponsavel() instanceof CorretorComissionado) {
+                    CorretorComissionado aux;
+                    aux = (CorretorComissionado) v.getCorretorResponsavel();
+                    gastos += (v.getValorNegociado() * 0.05) * (aux.getaComissao() / 100);
+                } else {
+                    CorretorContratado aux;
+                    aux = (CorretorContratado) v.getCorretorResponsavel();
+                    gastos += aux.getaSalarioFixo() + ((v.getValorNegociado()*0.05) * 0.01);
                 }
             }
         }
         lucro = fatTotal - gastos;
-        
-        textArea.setText("Faturamento Total da Imobiliaria: "+fatTotal
-        +"\nLucro da Imobiliaria: "+lucro);
+
+        textArea.setText("Faturamento Total da Imobiliaria: " + fatTotal
+                + "\nLucro da Imobiliaria: " + lucro);
     }//GEN-LAST:event_cbMesActionPerformed
 
     /**

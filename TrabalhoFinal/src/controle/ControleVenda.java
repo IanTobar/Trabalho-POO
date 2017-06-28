@@ -70,7 +70,7 @@ public class ControleVenda {
     }    
 
      */
-    public void cadastraVenda(String nomeComprador, Calendar dataVenda, String corretorResponsavel, double valorNegociado, Imovel objImovel) throws Exception {//abre cadastraVenda
+    public void cadastraVenda(String nomeComprador, Calendar dataVenda, Corretor corretorResponsavel, double valorNegociado, Imovel objImovel) throws Exception {//abre cadastraVenda
 
         //adiciona no ArrayList
         listaVendasRealizadas.add(new Venda(nomeComprador, dataVenda, corretorResponsavel, valorNegociado, objImovel));
