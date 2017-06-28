@@ -21,6 +21,10 @@ public class CadastraVenda extends javax.swing.JFrame {
 
     //controlador
     ControleVenda ctrVenda;
+    //recebera o objeto referente ao imovel que será cadastrado na venda
+    Imovel objImovel;
+    //variavel que recebera o index do elemento que será removido do ArrayList de imoveis
+    int indexRemove = 0;
 
     /**
      * Creates new form CadastraVenda
@@ -65,7 +69,7 @@ public class CadastraVenda extends javax.swing.JFrame {
                 cbTipoVender.addItem(imv.getTipo());//adiciona item no comboBox
             }//fecha if 01
         }//fecha for 01
-        
+
         //zera combobox
         cbImovelDisponivel.removeAllItems();
 
@@ -78,10 +82,16 @@ public class CadastraVenda extends javax.swing.JFrame {
             if (String.valueOf(cbTipoVender.getSelectedItem()).equals(imv.getTipo())) {
                 auxImovel.add(imv);//adiciona imovel no Array auxiliar
                 cbImovelDisponivel.addItem(imv.getCodigo());
+                //atribui objeto imovel para a variavel objImovel, será armazenado
+                //no arquivo de vendas
+                objImovel = imv;
+                //pega o index do imovel selecionado
+                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);
+                System.out.println("Index remover: "+ indexRemove);
             }
         }//fecha for 01
 
-        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+//        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -129,7 +139,7 @@ public class CadastraVenda extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("frCadastraVenda"); // NOI18N
 
         jPanel2.setName(""); // NOI18N
@@ -328,16 +338,20 @@ public class CadastraVenda extends javax.swing.JFrame {
         } else {
             ControlePrincipal ctrPrincipal = new ControlePrincipal();
             try {
-                Calendar data = Calendar.getInstance();
-                
-                data.set(Integer.parseInt(cbAno.getSelectedItem().toString()), Integer.parseInt(cbMes.getSelectedItem().toString()), Integer.parseInt(cbDia.getSelectedItem().toString()));
-                
-                ctrPrincipal.ctrVenda.cadastraVenda(Double.parseDouble(tfValorReal.getText()), 
-                        tfNomeComprador.getText(), data, 
+                //chama metodo para cadastrar a venda
+                ctrPrincipal.ctrVenda.cadastraVenda(tfNomeComprador.getText(), new Date(),
                         cbCorretorResponsavel.getSelectedItem().toString(),
-                        Double.parseDouble(tfValorNegociado.getText())
+                        Double.parseDouble(tfValorNegociado.getText()), objImovel
                 );
+                //chama metodo para remover imovel
+                System.out.println("No clicar do botao Index remover: "+ indexRemove);
+                ctrPrincipal.ctrImovel.removeLista(indexRemove);
                 JOptionPane.showMessageDialog(null, "Venda efetuada com sucesso!!!");
+                //fecha esta janela
+                this.dispose();
+                //chama este formulario novamente
+                ctrVenda.mostraFormulario();
+                
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
@@ -367,7 +381,7 @@ public class CadastraVenda extends javax.swing.JFrame {
                 //adiciona o códgio no combobox
                 cbImovelDisponivel.addItem(imv.getCodigo());
             }//fecha if 01
-            
+
         }//fecha for 01          
 
     }//GEN-LAST:event_cbTipoVenderActionPerformed
@@ -375,15 +389,20 @@ public class CadastraVenda extends javax.swing.JFrame {
     private void cbImovelDisponivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImovelDisponivelActionPerformed
 
         //for para pegar o valor real do item selecionado
-        for(Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()){
+        for (Imovel imv : ctrVenda.ctrPrincipal.ctrImovel.getLista()) {//abre for 01
             //verifica se o codigo da lista de imoveis é igual o codigo selecionado no combobox cbImovelDisponivel
-            if( String.valueOf(imv.getCodigo()).equals( String.valueOf(cbImovelDisponivel.getSelectedItem())) ){
+            if (String.valueOf(imv.getCodigo()).equals(String.valueOf(cbImovelDisponivel.getSelectedItem()))) {//abre if 01
                 //seta o JTextField tfValorReal com o valor do imovel
                 tfValorReal.setText(String.valueOf(imv.getPrecoSolicitado()));
-            }
-        }
+                //pega o imovel selecionado e passa para a variavel objImovel
+                //pois este imovel será gravado no arquivo de vendas
+                objImovel = imv;
+                //pega o index do imovel selecionado
+                indexRemove = ctrVenda.ctrPrincipal.ctrImovel.getLista().indexOf(imv);     
+                System.out.println("Index remover: "+ indexRemove);
+            }//fecha if 01
+        }//fecha for 01
         
-
     }//GEN-LAST:event_cbImovelDisponivelActionPerformed
 
     private void tfValorNegociadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorNegociadoActionPerformed
