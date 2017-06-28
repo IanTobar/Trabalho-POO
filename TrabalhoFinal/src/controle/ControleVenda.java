@@ -41,13 +41,9 @@ public class ControleVenda {
         lmtVenda = new LimiteVenda(this);
 
         try {
-
             this.desserializaVenda();
-
         } catch (Exception e) {
-
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao abrir arquivo", JOptionPane.ERROR_MESSAGE);
-
         }
 
     }
@@ -90,15 +86,15 @@ public class ControleVenda {
         for (Venda ven : listaVendasRealizadas) {//abre for 01
             //verifica se o tipo do imÃ³vel selecionado no LimitiImovel.listarImoveis existe
             Calendar data = ven.getDataVenda();
-            
+
             aux = "Nome do comprador: " + ven.getNomeComprador() + "\nData Venda: " + data.get(Calendar.DAY_OF_MONTH)
-                    + "/" + data.get(Calendar.MONTH) +"/" + data.get(Calendar.YEAR)
-                    + "\nCorretor: " + ven.getCorretorResponsavel() + "\nValor Real: " + ven.getObjImovel().getPrecoSolicitado()
+                    + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR)
+                    + "\nCorretor: " + ven.getCorretorResponsavel().getaNome() + "\nValor Real: " + ven.getObjImovel().getPrecoSolicitado()
                     + "\nValor Negociado: " + ven.getValorNegociado()
                     + "\nNome do vendedor: " + ven.getObjImovel().getNomeVendedor()
-                    + "\nCÃ³digo imÃ³vel: " + ven.getObjImovel().getCodigo()
+                    + "\nCodigo imovel: " + ven.getObjImovel().getCodigo()
                     + "\nTipo: " + ven.getObjImovel().getTipo()
-                    + "\nDescriÃ§Ã£o: " + ven.getObjImovel().getDescricao();
+                    + "\nDescricao: " + ven.getObjImovel().getDescricao();
             lista.add(aux);//adiciona imovel no ArrayList lita
 
         }//fecha for 01
@@ -109,9 +105,7 @@ public class ControleVenda {
 
     //GETTERS E SETTERS
     public ArrayList<Venda> getListaVendas() {
-
         return listaVendasRealizadas;
-
     }
 
     public void setListaVendas(ArrayList<Venda> listaVendas) {

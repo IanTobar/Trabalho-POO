@@ -43,7 +43,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {
             int ano = v.getDataVenda().get(Calendar.YEAR);
-            int mes = v.getDataVenda().get(Calendar.MONTH);
             if (!anosDisponiveis.contains(String.valueOf(ano))) {
                 anosDisponiveis.add(String.valueOf(ano));
             }
@@ -52,10 +51,6 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
         if (anosDisponiveis.size() != 0) {
             for (int i = 0; i < anosDisponiveis.size(); i++) {
                 cbAno.addItem(anosDisponiveis.get(i));
-            }
-
-            for (int i = 0; i < mesesDisponiveis.size(); i++) {
-                cbMes.addItem(mesesDisponiveis.get(i));
             }
         } else {
             cbAno.addItem("--");
