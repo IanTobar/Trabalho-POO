@@ -10,6 +10,8 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Corretor;
+import modelo.CorretorComissionado;
+import modelo.CorretorContratado;
 import modelo.Venda;
 
 /**
@@ -17,9 +19,10 @@ import modelo.Venda;
  * @author Bruno
  */
 public class RelatorioPagamento extends javax.swing.JFrame {
+
     //controlador
-    ControlePrincipal ctrPrincipal;    
-    
+    ControlePrincipal ctrPrincipal;
+
     /**
      * Creates new form LimitePagamento
      */
@@ -27,16 +30,16 @@ public class RelatorioPagamento extends javax.swing.JFrame {
         this.ctrPrincipal = ctrPrincipal;
         //inicia os componentes
         initComponents();
-        
+
         //pega a lista de corretores contratados, que está no ControleCorretor
         //adiciona os corretores no cbSelecionaCorretor (comboBox)
-        for( Corretor cor : ctrPrincipal.ctrCorretor.getListaCorretor() ){//abre for 01
+        for (Corretor cor : ctrPrincipal.ctrCorretor.getListaCorretor()) {//abre for 01
             cbSelecionaCorretor.addItem(cor.getaNome());//adiciona item no comboBox
         }//fecha for 01
-        
+
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setVisible(true);        
-        
+        this.setVisible(true);
+
     }
 
     /**
@@ -63,9 +66,17 @@ public class RelatorioPagamento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Calculo do Pagamento para Corretores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
         lbMes.setText("Digite o Mês:");
 
         lbAno.setText("Digite o Ano:");
+
+        cbSelecionaCorretor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSelecionaCorretorActionPerformed(evt);
+            }
+        });
 
         lbCorretor.setText("Selecione o Corretor:");
 
@@ -75,20 +86,6 @@ public class RelatorioPagamento extends javax.swing.JFrame {
 
         lbResultado.setText("Resultado:");
 
-        btSubmit.setText("OK");
-        btSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSubmitActionPerformed(evt);
-            }
-        });
-
-        btCancelar.setText("Cancelar");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,12 +94,7 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbSelecionaCorretor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSubmit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btCancelar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbCorretor)
@@ -118,9 +110,6 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btSubmit});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -138,71 +127,170 @@ public class RelatorioPagamento extends javax.swing.JFrame {
                 .addComponent(lbCorretor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbSelecionaCorretor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbResultado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSubmit)
-                    .addComponent(btCancelar))
-                .addGap(57, 57, 57))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        btSubmit.setText("OK");
+        btSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSubmitActionPerformed(evt);
+            }
+        });
+
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSubmit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCancelar)
+                .addGap(18, 18, 18))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancelar, btSubmit});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btCancelar)
+                    .addComponent(btSubmit))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubmitActionPerformed
-        //declaração de variaveis
-        int pMes = Integer.parseInt(tfMesPesquisa.getText());
-        int pAno = Integer.parseInt(tfAnoPesquisa.getText());
+
         double vendas = 0.0;
+        double salario = 0.0;
+        double comissao = 0.0;
+        double valorPagar = 0.0;
         String output = "";
-        
+        String tipo = "";
+
         //verifica se o campo ano e mês estão em branco
-        if( tfAnoPesquisa.getText().equals("") || tfMesPesquisa.getText().equals("") ){//abre if 01
+        if (tfAnoPesquisa.getText().equals("") || tfMesPesquisa.getText().equals("")) {//abre if 01
             JOptionPane.showMessageDialog(null, "Mês e ano obrigatórios!!!");
         }//fecha if 01
-        else{//abre else do if 02
-            
+        else {//abre else do if 02
+
+            int pMes = Integer.parseInt(tfMesPesquisa.getText());
+            int pAno = Integer.parseInt(tfAnoPesquisa.getText());
+
             //for para percorrer o ArrayList de vendas
-            for(Venda v :ctrPrincipal.ctrVenda.getListaVendas()){//abre for 01
+            for (Venda v : ctrPrincipal.ctrVenda.getListaVendas()) {//abre for 01
                 //se o mês digitado existir no ArrayList de vendas
-                if( (v.getDataVenda().get(Calendar.MONTH) == pMes) && 
-                    (v.getDataVenda().get(Calendar.YEAR) == pAno ) &&
-                    (v.getCorretorResponsavel().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem()) ))
-                ){//abre for 02
-                    vendas += v.getValorNegociado();
-                    
-                    
-                }//fecha for 02
-                
+                if ((v.getDataVenda().get(Calendar.MONTH) == pMes)
+                        && (v.getDataVenda().get(Calendar.YEAR) == pAno)
+                        && (v.getCorretorResponsavel().getaNome().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem())))) {//abre if 02
+                    //se o corretor for comissionado
+                    if (v.getCorretorResponsavel() instanceof CorretorComissionado) {//abre if 03
+                        vendas += v.getValorNegociado();
+                        tipo = "comissionado";
+                    }//fecha if 03
+                    else {
+                        CorretorContratado auxContratado = (CorretorContratado) v.getCorretorResponsavel();
+                        vendas += v.getValorNegociado();
+                        tipo = "Contratado";
+                        salario = auxContratado.getaSalarioFixo();
+                    }
+
+                }//fecha if 02
+
             }//fecha for 01
-            
+
         }//fecha else do if 02
-        
+
+        //calcula valor pago para o corretor
+        if (tipo.equals("comissionado")) {//abre if 04
+            vendas = vendas * 0.03;
+            output += "Valor a ser pago para o corretor comissionado: ";
+            output += String.valueOf(vendas) + "\n";
+            output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+
+        }//fecha if 04
+        else if (tipo.equals("")) {//abre if 05
+            //se não tiver a venda do nome selecionado no comboBox
+            //pega somente o salario, se for contratado            
+            //traz os outros campos zerados
+
+            for (Corretor c : ctrPrincipal.ctrCorretor.getListaCorretor()) {
+                if (c instanceof CorretorContratado) {
+                    CorretorContratado con = (CorretorContratado) c;
+                    if (con.getaNome().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem()))) {
+                        salario = con.getaSalarioFixo();
+
+                        comissao = vendas * 0.01;
+                        valorPagar = comissao + salario;
+                        output += "Valor a ser pago para o corretor contratado:";
+                        output += "\nComissão: " + String.valueOf(comissao);
+                        output += "\nSalário: " + salario;
+                        output += "\nValor total a pagar:" + String.valueOf(valorPagar) + "\n";
+                        output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+
+                    }
+                } else {
+                    CorretorComissionado comi = (CorretorComissionado) c;
+                    if (comi.getaNome().equals(String.valueOf(cbSelecionaCorretor.getSelectedItem()))) {
+                        vendas = vendas * 0.03;
+                        output += "Valor a ser pago para o corretor comissionado: ";
+                        output += String.valueOf(vendas) + "\n";
+                        output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+                    }
+
+                }
+
+            }
+
+        }//fecha if 05
+        else {
+            comissao = vendas * 0.01;
+            valorPagar = comissao + salario;
+            output += "Valor a ser pago para o corretor contratado:";
+            output += "\nComissão: " + String.valueOf(comissao);
+            output += "\nSalário: " + salario;
+            output += "\nValor total a pagar:" + String.valueOf(valorPagar) + "\n";
+            output += "Período: \n" + "Mês: " + tfMesPesquisa.getText() + "\nAno: " + tfAnoPesquisa.getText();
+        }
+
+        //limpa campos
+        tfAnoPesquisa.setText("");
+        tfMesPesquisa.setText("");
+
+        taResultado.setEditable(false);
         taResultado.setText(output);
-        
+
     }//GEN-LAST:event_btSubmitActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         //fecha tela
         this.dispose();
-       
+
     }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void cbSelecionaCorretorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelecionaCorretorActionPerformed
+
+        taResultado.setText("");
+
+    }//GEN-LAST:event_cbSelecionaCorretorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
