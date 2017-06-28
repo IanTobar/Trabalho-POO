@@ -55,7 +55,7 @@ public class RelatorioImovel extends javax.swing.JFrame {
         }
 
         textAreaEncalhados.setText(relacaoImoveisEncalhados());
-
+        textAreaEncalhados.setEditable(false);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
     }
@@ -501,8 +501,9 @@ public class RelatorioImovel extends javax.swing.JFrame {
     }//GEN-LAST:event_cbAnoActionPerformed
 
     private void cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMesActionPerformed
-
+        
         textAreaVendidos.setText(relacaoImoveisVendidos());
+        textAreaVendidos.setEditable(false);
     }//GEN-LAST:event_cbMesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -200,6 +200,8 @@ public class RelatorioFaturamento extends javax.swing.JFrame {
 
         textArea.setText("Faturamento Total da Imobiliaria: " + fatTotal
                 + "\nLucro da Imobiliaria: " + lucro);
+        
+        textArea.setEditable(false);
     }//GEN-LAST:event_cbMesActionPerformed
 
     /**

@@ -226,6 +226,7 @@ public class RelatorioCorretores extends javax.swing.JFrame {
 
         }//fecha else do if 01
         lbResultNomeCorretorMes.setText(nomeCorretorMes);
+        taResultadoPesquisa.setEditable(false);
         taResultadoPesquisa.setText(output);
 
     }//GEN-LAST:event_btOkActionPerformed
