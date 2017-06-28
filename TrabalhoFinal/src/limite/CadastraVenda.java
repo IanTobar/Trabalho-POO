@@ -7,6 +7,7 @@ package limite;
 
 import controle.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import modelo.*;
 import java.util.Date;
 import javax.swing.JComboBox;
@@ -36,12 +37,9 @@ public class CadastraVenda extends javax.swing.JFrame {
 
         String[] nomes = new String[ctrVenda.ctrPrincipal.ctrCorretor.getLista().size()];
 
-        System.out.println("teste1");
-
         int i = 0;
         for (Corretor c : ctrVenda.ctrPrincipal.ctrCorretor.getLista()) {
             nomes[i] = c.getaNome();
-            System.out.println(c.getaNome());
             i++;
         }
         cbCorretorResponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(nomes));
